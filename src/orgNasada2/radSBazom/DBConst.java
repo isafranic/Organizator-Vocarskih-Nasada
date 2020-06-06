@@ -28,7 +28,7 @@ public class DBConst {
 	public static final String dBNasad = "nasad";
 	public static final String dBNavodnjavanje = "navodnjavanje";
 	public static final String dBPodloge = "podloge";
-	public static final String dBPosaðeno = "posaðeno";
+	public static final String dBPosadeno = "posadeno";
 	public static final String dBRedovi = "redovi";
 	public static final String dBSadrzajReda = "sadrzajReda";
 	public static final String dBSorte = "sorte";
@@ -100,17 +100,17 @@ public class DBConst {
 	public static final String vPodloga = "'Podloga'";
 	public static final String vPodBujnost = "'Bujnost'";
 	/*
-	 * Posaðeno column names
+	 * posadeno column names
 	 */
-	public static final String dBColPosIDPos = dBPosaðeno + ".idPosaðeno";
-	public static final String dBColPosSorteID = dBPosaðeno + ".sorteID";
-	public static final String dBColPosPodlogeID = dBPosaðeno + ".podlogeID";
-	public static final String dBColPosNaziv = dBPosaðeno + ".nazivPosaðeno";
+	public static final String dBColPosIDPos = dBPosadeno + ".idposadeno";
+	public static final String dBColPosSorteID = dBPosadeno + ".sorteID";
+	public static final String dBColPosPodlogeID = dBPosadeno + ".podlogeID";
+	public static final String dBColPosNaziv = dBPosadeno + ".nazivposadeno";
 	/*
-	 * Posaðeno CN visual
+	 * posadeno CN visual
 	 */
-	public static final String vPosaðenoID = "'Posaðeno ID'";
-	public static final String vPosaðeno = "'Vocka'";
+	public static final String vPosadenoID = "'Posadeno ID'";
+	public static final String vPosadeno = "'Vocka'";
 	public static final String vDatumSadnje = "'Sadnja'";
 	/*
 	 * Redovi column names
@@ -129,7 +129,7 @@ public class DBConst {
 	 */
 	public static final String DBColSadRedID = dBSadrzajReda + ".idSadrzajReda";
 	public static final String dBColSadRedRedID = dBSadrzajReda + ".redID";
-	public static final String dBColSadRedPosID = dBSadrzajReda + ".posaðenoID";
+	public static final String dBColSadRedPosID = dBSadrzajReda + ".posadenoID";
 	public static final String dBColSadRedBrojMjesta = dBSadrzajReda + ".brojMjesta";
 	public static final String dBColSadRedDatumSadnje = dBSadrzajReda + ".datumSadnje";
 	/*
@@ -245,36 +245,36 @@ public class DBConst {
 	 *  Sadrzaj Reda Prikaz
 	 */
 	public static final String[] sadrzajRedaWhat = {dBColRedBrojReda ,dBColSadRedBrojMjesta ,dBColPosNaziv ,dBColSadRedDatumSadnje};
-	public static final String[] sadrzajRedaAs = {vRedoviBrReda, vSadRedovaBrMjesta, vPosaðeno, vDatumSadnje};
-	public static final String[] sadrzajRedaJoin = {dBRedovi, dBPosaðeno};
+	public static final String[] sadrzajRedaAs = {vRedoviBrReda, vSadRedovaBrMjesta, vPosadeno, vDatumSadnje};
+	public static final String[] sadrzajRedaJoin = {dBRedovi, dBPosadeno};
 	public static final String[] sadrzajRedaJoinOn = {dBColSadRedRedID, dBColSadRedPosID};
 	public static final String[] sadrzajRedaJoinFrom = {dBColRedIDReda, dBColPosIDPos};
 	public static final String[] sadrzajRedaOrdering = {dBColRedBrojReda, dBColSadRedBrojMjesta};
 	/*
-	 * Posaðeno prikaz 
+	 * posadeno prikaz 
 	 */
-	public static final String[] posaðenoPrikazWhat = {dBColPosIDPos, dBColPosNaziv, dBColSorIme, dBColSorVrsta, dBColPodNaziv, dBColPodBujnost};
-	public static final String[] posaðenoPrikazAs = {vPosaðenoID, vNaziv, vSorta, vSorteVrsta, vPodloga, vPodBujnost};
-	public static final String[] posaðenoPrikazJoin = {dBSadrzajReda,dBSorte, dBPodloge};
-	public static final String[] posaðenoPrikazJoinOn = {dBColPosIDPos,dBColPosSorteID,dBColPosPodlogeID};
-	public static final String[] posaðenoPrikazJoinFrom = {dBColSadRedPosID,dBColSorID,dBColPodIDPod};
-	public static final String[] posaðenoPrikazOrdering = {dBColPosNaziv + " LIMIT 1"};
-	// prikaz informacija o posaðenom
-	public static final String posaðenoPrikazByIdWhere = dBColPosIDPos + equalsString;
+	public static final String[] posadenoPrikazWhat = {dBColPosIDPos, dBColPosNaziv, dBColSorIme, dBColSorVrsta, dBColPodNaziv, dBColPodBujnost};
+	public static final String[] posadenoPrikazAs = {vPosadenoID, vNaziv, vSorta, vSorteVrsta, vPodloga, vPodBujnost};
+	public static final String[] posadenoPrikazJoin = {dBSadrzajReda,dBSorte, dBPodloge};
+	public static final String[] posadenoPrikazJoinOn = {dBColPosIDPos,dBColPosSorteID,dBColPosPodlogeID};
+	public static final String[] posadenoPrikazJoinFrom = {dBColSadRedPosID,dBColSorID,dBColPodIDPod};
+	public static final String[] posadenoPrikazOrdering = {dBColPosNaziv + " LIMIT 1"};
+	// prikaz informacija o posadenom
+	public static final String posadenoPrikazByIdWhere = dBColPosIDPos + equalsString;
 	
 	/*
-	 * Posaðeno prikaz condensed
+	 * posadeno prikaz condensed
 	 */
-	public static final String[] posaðenoPrikazCondWhat = {dBColPosIDPos, dBColPosNaziv, dBColSorIme,dBColPodNaziv};
-	public static final String[] posaðenoPrikazCondAs = {vPosaðenoID, vNaziv, vSorta, vPodloga};
-	public static final String[] posaðenoPrikazCondJoin = {dBSorte,dBPodloge};
-	public static final String[] posaðenoPrikazCondJoinOn = {dBColPosSorteID,dBColPosPodlogeID};
-	public static final String[] posaðenoPrikazCondJoinFrom = {dBColSorID,dBColPodIDPod};
+	public static final String[] posadenoPrikazCondWhat = {dBColPosIDPos, dBColPosNaziv, dBColSorIme,dBColPodNaziv};
+	public static final String[] posadenoPrikazCondAs = {vPosadenoID, vNaziv, vSorta, vPodloga};
+	public static final String[] posadenoPrikazCondJoin = {dBSorte,dBPodloge};
+	public static final String[] posadenoPrikazCondJoinOn = {dBColPosSorteID,dBColPosPodlogeID};
+	public static final String[] posadenoPrikazCondJoinFrom = {dBColSorID,dBColPodIDPod};
 	/*
-	 * get Posaðeno ID By Name
+	 * get posadeno ID By Name
 	 */
-	public static final String[] posaðenoIDByNameWhat = {dBColPosIDPos};
-	public static final String[] posaðenoIDByNameWhere = {dBColPosNaziv + equalsString};
+	public static final String[] posadenoIDByNameWhat = {dBColPosIDPos};
+	public static final String[] posadenoIDByNameWhere = {dBColPosNaziv + equalsString};
 	/*
 	 * Navodnjavanje prikaz sva
 	 */
@@ -352,8 +352,8 @@ public class DBConst {
 	/*
 	 * Sadrzaj Reda check exists
 	 */
-	public static final String[] sadrzajRedaCheckPosaðenoWhat = {dBColSadRedPosID };
-	public static final String[] sadrzajRedaCheckPosaðenoWhere = {dBColSadRedRedID  + equalsString, dBColSadRedBrojMjesta + equalsString};
+	public static final String[] sadrzajRedaCheckPosadenoWhat = {dBColSadRedPosID };
+	public static final String[] sadrzajRedaCheckPosadenoWhere = {dBColSadRedRedID  + equalsString, dBColSadRedBrojMjesta + equalsString};
 	/*
 	 * Unesi Sredstvo
 	 */
@@ -363,9 +363,9 @@ public class DBConst {
 	 */
 	public static final String[] unesiKarencu = {dBColKarSredstvoID ,dBColKarDatTret ,dBColKarDatIstRad ,dBColKarDatIstKon };
 	/*
-	 * Unesi Posaðeno
+	 * Unesi posadeno
 	 */
-	public static final String[] unesiPosaðeno = {dBColPosSorteID ,dBColPosPodlogeID ,dBColPosNaziv };
+	public static final String[] unesiPosadeno = {dBColPosSorteID ,dBColPosPodlogeID ,dBColPosNaziv };
 	/*
 	 * Unesi Sorte
 	 */
@@ -407,10 +407,10 @@ public class DBConst {
 	public static final String[] updateSortaWhat = {dBColSorIme ,dBColSorVrsta };
 	public static final String[] updateSortaWhere = {dBColSorID  + equalsString};
 	/*
-	 * Update Posaðeno
+	 * Update posadeno
 	 */
-	public static final String[] updatePosaðenoWhat = {dBColPosNaziv ,dBColPosSorteID ,dBColPosPodlogeID };
-	public static final String[] updatePosaðenoWhere = {dBColPosIDPos + equalsString};
+	public static final String[] updatePosadenoWhat = {dBColPosNaziv ,dBColPosSorteID ,dBColPosPodlogeID };
+	public static final String[] updatePosadenoWhere = {dBColPosIDPos + equalsString};
 	/*
 	 * Update Red
 	 */

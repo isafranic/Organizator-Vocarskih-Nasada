@@ -89,9 +89,9 @@ public class Utilities {
 		}
 	}
 	
-	public static PosaðenoInfo query2PosaðenoInfo(StringBuilder sqlQuery)
+	public static PosadenoInfo query2PosadenoInfo(StringBuilder sqlQuery)
 	{
-		PosaðenoInfo posInfo = null;
+		PosadenoInfo posInfo = null;
 		try(Connection conn = DriverManager.getConnection(DBConst.databaseURL, DBConst.databaseCredUser, DBConst.databaseCredPass))
 		{
 			logger.info(sqlQuery);
@@ -99,7 +99,7 @@ public class Utilities {
 			ResultSet rs = pstmt.executeQuery();						
 		    if(rs.next())
 		    {
-		    	posInfo = new PosaðenoInfo(rs.getInt("posaðeno.idPosaðeno"), rs.getString("posaðeno.nazivPosaðeno"),
+		    	posInfo = new PosadenoInfo(rs.getInt("Posadeno.idPosadeno"), rs.getString("Posadeno.nazivPosadeno"),
 		    			rs.getString("sorte.imeSorte"), rs.getString("podloge.nazivPodloge"));		    
 		    }
 		    rs.close();

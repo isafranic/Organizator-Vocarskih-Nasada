@@ -10,7 +10,7 @@ import orgNasada2.PodatkovneKlase.Korisnik;
 import orgNasada2.PodatkovneKlase.Nasad;
 import orgNasada2.PodatkovneKlase.Navodnjavanje;
 import orgNasada2.PodatkovneKlase.Podloga;
-import orgNasada2.PodatkovneKlase.PosaðenoInfo;
+import orgNasada2.PodatkovneKlase.PosadenoInfo;
 import orgNasada2.PodatkovneKlase.RedInfo;
 import orgNasada2.PodatkovneKlase.Sorta;
 import orgNasada2.PodatkovneKlase.Sredstvo;
@@ -115,9 +115,9 @@ public class DBSelect {
 	public static Vector<Integer> getAllIDSadnice()
 	{
 		Vector<String> what = new Vector<String>();
- 		what.add("idPosaðeno");
+ 		what.add("idPosadeno");
  		
-		return Utilities.query2VecInt(Utilities.fetchStrBuilderSelect(DBConst.purposeSelect, what, DBConst.emptyVector, DBConst.dBPosaðeno, DBConst.emptyVector, DBConst.emptyVector, DBConst.emptyVector, DBConst.emptyVector, DBConst.emptyVector));
+		return Utilities.query2VecInt(Utilities.fetchStrBuilderSelect(DBConst.purposeSelect, what, DBConst.emptyVector, DBConst.dBPosadeno, DBConst.emptyVector, DBConst.emptyVector, DBConst.emptyVector, DBConst.emptyVector, DBConst.emptyVector));
 	}
 
 	public static TableModel getSveNasadeKorisnika(String user)
@@ -167,34 +167,34 @@ public class DBSelect {
  		Vector<String> what = new Vector<String>();
  		what.add(DBConst.vockeNaziviWhat);
 				
-		return Utilities.query2VecStr(Utilities.fetchStrBuilderSelect(DBConst.purposeSelect, what, DBConst.emptyVector, DBConst.dBPosaðeno, 
+		return Utilities.query2VecStr(Utilities.fetchStrBuilderSelect(DBConst.purposeSelect, what, DBConst.emptyVector, DBConst.dBPosadeno, 
 				DBConst.emptyVector, DBConst.emptyVector, DBConst.emptyVector, DBConst.emptyVector, DBConst.emptyVector));
 	}
 	
-	public static TableModel getPosaðenoByName(String imePosaðenog)
+	public static TableModel getPosadenoByName(String imePosadenog)
 	{
 		Vector<String> what = new Vector<String>();
- 		for(String s : DBConst.posaðenoPrikazWhat) what.add(s);
+ 		for(String s : DBConst.posadenoPrikazWhat) what.add(s);
 		
  		Vector<String> as = new Vector<String>();
- 		for(String s : DBConst.posaðenoPrikazAs) as.add(s);
+ 		for(String s : DBConst.posadenoPrikazAs) as.add(s);
  		
 		Vector<String> join = new Vector<String>();
-		for(String s : DBConst.posaðenoPrikazJoin) join.add(s);
+		for(String s : DBConst.posadenoPrikazJoin) join.add(s);
 		
 		Vector<String> joinOn = new Vector<String>();
-		for(String s : DBConst.posaðenoPrikazJoinOn) joinOn.add(s);
+		for(String s : DBConst.posadenoPrikazJoinOn) joinOn.add(s);
 		
 		Vector<String> joinFrom = new Vector<String>();
-		for(String s : DBConst.posaðenoPrikazJoinFrom) joinFrom.add(s);
+		for(String s : DBConst.posadenoPrikazJoinFrom) joinFrom.add(s);
 		
 		Vector<String> where = new Vector<String>();
-		where.add("posaðeno.nazivPosaðeno = '" + imePosaðenog + "' ");
+		where.add("Posadeno.nazivPosadeno = '" + imePosadenog + "' ");
 		
 		Vector<String> ordering = new Vector<String>();
-		for(String s: DBConst.posaðenoPrikazOrdering) ordering.add(s);
+		for(String s: DBConst.posadenoPrikazOrdering) ordering.add(s);
 		
-		return Utilities.query2TabMod(Utilities.fetchStrBuilderSelect(DBConst.purposeSelect, what, as, DBConst.dBPosaðeno, join, joinOn, joinFrom, where, ordering));
+		return Utilities.query2TabMod(Utilities.fetchStrBuilderSelect(DBConst.purposeSelect, what, as, DBConst.dBPosadeno, join, joinOn, joinFrom, where, ordering));
 		
 	}
 	
@@ -208,11 +208,11 @@ public class DBSelect {
 	public static String getNotExistsSadrzajRedaQuery(int redID, int brojMjesta)
 	{
 		Vector<String> what = new Vector<String>();
- 		for(String s : DBConst.sadrzajRedaCheckPosaðenoWhat) what.add(s);
+ 		for(String s : DBConst.sadrzajRedaCheckPosadenoWhat) what.add(s);
  		
  		Vector<String> where = new Vector<String>();
- 		where.add(DBConst.sadrzajRedaCheckPosaðenoWhere[0] + String.valueOf(redID));
- 		where.add(DBConst.sadrzajRedaCheckPosaðenoWhere[1] + String.valueOf(brojMjesta));
+ 		where.add(DBConst.sadrzajRedaCheckPosadenoWhere[0] + String.valueOf(redID));
+ 		where.add(DBConst.sadrzajRedaCheckPosadenoWhere[1] + String.valueOf(brojMjesta));
  		
 		return Utilities.fetchStrBuilderSelect(DBConst.purposeSelect, what, DBConst.emptyVector, DBConst.dBSadrzajReda, DBConst.emptyVector, DBConst.emptyVector, DBConst.emptyVector, where, DBConst.emptyVector).toString();
 	}
@@ -276,7 +276,7 @@ public class DBSelect {
 		
 		Vector<String> where = new Vector<String>();
 		where.add("redovi.nasadID = " + idNasad + " ");
-		if(!imeVocke.equals("")) where.add("posaðeno.nazivPosaðeno = '" + imeVocke + "' ");
+		if(!imeVocke.equals("")) where.add("Posadeno.nazivPosadeno = '" + imeVocke + "' ");
 		if(!brojReda.equals("")) where.add("redovi.brojReda = " + brojReda + " ");
 		
 		logger.info("Sadrzaj Reda Query, Nasad ID: " + idNasad + " ");
@@ -285,46 +285,46 @@ public class DBSelect {
 	
 	}
 	
-	public static TableModel getPosaðeno()
+	public static TableModel getPosadeno()
 	{
 		Vector<String> what = new Vector<String>();
- 		for(String s : DBConst.posaðenoPrikazCondWhat) what.add(s);
+ 		for(String s : DBConst.posadenoPrikazCondWhat) what.add(s);
  		
 		Vector<String> as = new Vector<String>();
- 		for(String s : DBConst.posaðenoPrikazCondAs) as.add(s);
+ 		for(String s : DBConst.posadenoPrikazCondAs) as.add(s);
 		
 		Vector<String> join = new Vector<String>();
-		for(String s : DBConst.posaðenoPrikazCondJoin) join.add(s);
+		for(String s : DBConst.posadenoPrikazCondJoin) join.add(s);
 		
 		Vector<String> joinOn = new Vector<String>();
-		for(String s : DBConst.posaðenoPrikazCondJoinOn) joinOn.add(s);
+		for(String s : DBConst.posadenoPrikazCondJoinOn) joinOn.add(s);
 		
 		Vector<String> joinFrom = new Vector<String>();
-		for(String s : DBConst.posaðenoPrikazCondJoinFrom) joinFrom.add(s);
+		for(String s : DBConst.posadenoPrikazCondJoinFrom) joinFrom.add(s);
 		
 		Vector<String> where = new Vector<String>();
 		
-		return Utilities.query2TabMod(Utilities.fetchStrBuilderSelect(DBConst.purposeSelect, what, as, DBConst.dBPosaðeno, join, joinOn, joinFrom, where,  DBConst.emptyVector));
+		return Utilities.query2TabMod(Utilities.fetchStrBuilderSelect(DBConst.purposeSelect, what, as, DBConst.dBPosadeno, join, joinOn, joinFrom, where,  DBConst.emptyVector));
 		}
 	
-	public static PosaðenoInfo getPosaðenoByID(int id)
+	public static PosadenoInfo getPosadenoByID(int id)
 	{
 		Vector<String> what = new Vector<String>();
- 		for(String s : DBConst.posaðenoPrikazCondWhat) what.add(s);
+ 		for(String s : DBConst.posadenoPrikazCondWhat) what.add(s);
 		
 		Vector<String> join = new Vector<String>();
-		for(String s : DBConst.posaðenoPrikazCondJoin) join.add(s);
+		for(String s : DBConst.posadenoPrikazCondJoin) join.add(s);
 		
 		Vector<String> joinOn = new Vector<String>();
-		for(String s : DBConst.posaðenoPrikazCondJoinOn) joinOn.add(s);
+		for(String s : DBConst.posadenoPrikazCondJoinOn) joinOn.add(s);
 		
 		Vector<String> joinFrom = new Vector<String>();
-		for(String s : DBConst.posaðenoPrikazCondJoinFrom) joinFrom.add(s);
+		for(String s : DBConst.posadenoPrikazCondJoinFrom) joinFrom.add(s);
 		
 		Vector<String> where = new Vector<String>();
-		where.add(DBConst.posaðenoPrikazByIdWhere + id);
+		where.add(DBConst.posadenoPrikazByIdWhere + id);
 		
-		return Utilities.query2PosaðenoInfo(Utilities.fetchStrBuilderSelect(DBConst.purposeSelect, what, DBConst.emptyVector, DBConst.dBPosaðeno, join, joinOn, joinFrom, where,  DBConst.emptyVector));
+		return Utilities.query2PosadenoInfo(Utilities.fetchStrBuilderSelect(DBConst.purposeSelect, what, DBConst.emptyVector, DBConst.dBPosadeno, join, joinOn, joinFrom, where,  DBConst.emptyVector));
 		}
 	
 	public static TableModel getNavodnjavanje()
@@ -375,16 +375,16 @@ public class DBSelect {
 		return Utilities.query2Navodnjavanje(Utilities.fetchStrBuilderSelect(DBConst.purposeSelect, what, DBConst.emptyVector, DBConst.dBNavodnjavanje, DBConst.emptyVector, DBConst.emptyVector, DBConst.emptyVector, where,  DBConst.emptyVector));
 	}
 	
-	public static int getPosaðenoID(String name)
+	public static int getPosadenoID(String name)
 	{
 		Vector<String> what = new Vector<String>();
-		for(String s: DBConst.posaðenoIDByNameWhat) what.add(s);
+		for(String s: DBConst.posadenoIDByNameWhat) what.add(s);
 		
 		Vector<String> where = new Vector<String>();
-		where.add(DBConst.posaðenoIDByNameWhere[0] + "'" + name + "' ");
+		where.add(DBConst.posadenoIDByNameWhere[0] + "'" + name + "' ");
 		
 		Vector<Integer> vecInt = new Vector<Integer>();
-		vecInt.addAll(Utilities.query2VecInt(Utilities.fetchStrBuilderSelect(DBConst.purposeSelect, what, DBConst.emptyVector, DBConst.dBPosaðeno, DBConst.emptyVector, DBConst.emptyVector, DBConst.emptyVector, where,  DBConst.emptyVector)));
+		vecInt.addAll(Utilities.query2VecInt(Utilities.fetchStrBuilderSelect(DBConst.purposeSelect, what, DBConst.emptyVector, DBConst.dBPosadeno, DBConst.emptyVector, DBConst.emptyVector, DBConst.emptyVector, where,  DBConst.emptyVector)));
 		return vecInt.firstElement();
 	}
 	

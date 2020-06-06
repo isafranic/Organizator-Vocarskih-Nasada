@@ -570,10 +570,10 @@ public class EntryDialog extends JDialog {
 						if(cBoxChoice2.getSelectedItem().toString().equals(String.valueOf(rI.getBrojReda())) )
 							{
 							if(chkBoxPopuniRed.isSelected()) DBUpdate.updateCijeliSadrzajReda(
-								rI.getIdReda(),	DBSelect.getPosaðenoID(cBoxChoice4.getSelectedItem().toString()), LocalDate.now());
+								rI.getIdReda(),	DBSelect.getPosadenoID(cBoxChoice4.getSelectedItem().toString()), LocalDate.now());
 							else DBUpdate.updateSadrzajReda(
 								rI.getIdReda(), Integer.valueOf(cBoxChoice3.getSelectedItem().toString()),
-								DBSelect.getPosaðenoID(cBoxChoice4.getSelectedItem().toString()), LocalDate.now());
+								DBSelect.getPosadenoID(cBoxChoice4.getSelectedItem().toString()), LocalDate.now());
 							dispose();
 							}						
 					}				
@@ -626,7 +626,7 @@ public class EntryDialog extends JDialog {
 		JButton btnCommit = new JButton("Unesi");
 		btnCommit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DBInsert.unesiPosaðeno(DBSelect.getSorteID(cBoxChoice1.getSelectedItem().toString()),
+				DBInsert.unesiPosadeno(DBSelect.getSorteID(cBoxChoice1.getSelectedItem().toString()),
 						DBSelect.getPodlogeID(cBoxChoice2.getSelectedItem().toString()),
 						tFieldFirst.getText());
 			}
@@ -654,7 +654,7 @@ public class EntryDialog extends JDialog {
 		
 		setTitle("Promjena postojece vocke (7)");
 		
-		PosaðenoInfo posaðeno = new PosaðenoInfo(DBSelect.getPosaðenoByID(GuiVisual.getSelectedVockaID()));
+		PosadenoInfo Posadeno = new PosadenoInfo(DBSelect.getPosadenoByID(GuiVisual.getSelectedVockaID()));
 		
 		JLabel lblFirst = new JLabel("Sorta: ");
 		insertPanel.add(lblFirst, "2, 2, right, default");
@@ -662,14 +662,14 @@ public class EntryDialog extends JDialog {
 		for(String s : DBSelect.getPodlogeVS()) cBoxChoice2.addItem(s);
 		
 		cBoxChoice1 = new JComboBox<String>();
-		cBoxChoice1.setSelectedItem(posaðeno.getSorta());
+		cBoxChoice1.setSelectedItem(Posadeno.getSorta());
 		insertPanel.add(cBoxChoice1, "4, 2, fill, default");
 		
 		JLabel lblSecond = new JLabel("Podloga ");
 		insertPanel.add(lblSecond, "2, 4, right, default");
 		
 		cBoxChoice2 = new JComboBox<String>();
-		cBoxChoice2.setSelectedItem(posaðeno.getPodloga());
+		cBoxChoice2.setSelectedItem(Posadeno.getPodloga());
 		insertPanel.add(cBoxChoice2, "4, 4, fill, default");
 		
 		JLabel lblThird = new JLabel("Naziv ");
@@ -678,13 +678,13 @@ public class EntryDialog extends JDialog {
 		tFieldFirst = new JTextField();
 		insertPanel.add(tFieldFirst, "4, 6, fill, default");
 		tFieldFirst.setColumns(10);
-		tFieldFirst.setText(posaðeno.getNazivPosaðeno());
+		tFieldFirst.setText(Posadeno.getNazivPosadeno());
 		
 		JButton btnCommit = new JButton("Unesi");
 		btnCommit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DBUpdate.updatePosaðeno(
-						posaðeno.getIdPosaðeno(), tFieldFirst.getText(), 
+				DBUpdate.updatePosadeno(
+						Posadeno.getIdPosadeno(), tFieldFirst.getText(), 
 						DBSelect.getSorteID(cBoxChoice1.getSelectedItem().toString()),
 								DBSelect.getPodlogeID(cBoxChoice2.getSelectedItem().toString())
 								);

@@ -104,22 +104,22 @@ public class DBUpdate {
 		
 	}
 	/*
-	 * Update Posaðeno
+	 * Update Posadeno
 	 */
-	public static void updatePosaðeno(int idPosaðeno, String nazivPosaðeno, int sortaID, int podlogaID)
+	public static void updatePosadeno(int idPosadeno, String nazivPosadeno, int sortaID, int podlogaID)
 	{
 		Vector<String> what = new Vector<String>();
-		for(String s : DBConst.updatePosaðenoWhat) what.add(s);
+		for(String s : DBConst.updatePosadenoWhat) what.add(s);
 		
 		Vector<String> values = new Vector<String>();
-		values.add(nazivPosaðeno);
+		values.add(nazivPosadeno);
 		values.add(String.valueOf(sortaID));
 		values.add(String.valueOf(podlogaID));
 		
 		Vector<String> where = new Vector<String>();
-		for(String s : DBConst.updatePosaðenoWhere) where.add(s + idPosaðeno);
+		for(String s : DBConst.updatePosadenoWhere) where.add(s + idPosadeno);
 		
-		Utilities.executeUpdate(Utilities.fetchStrBuilderUpdIns(DBConst.purposeUpdate, DBConst.dBPosaðeno, what, values, where));
+		Utilities.executeUpdate(Utilities.fetchStrBuilderUpdIns(DBConst.purposeUpdate, DBConst.dBPosadeno, what, values, where));
 		
 	}
 	/*
@@ -144,13 +144,13 @@ public class DBUpdate {
 	/*
 	 * Update Sadrzaj Reda
 	 */
-	public static void updateSadrzajReda(int redID, int brojSadnogMjesta, int PosaðenoID, LocalDate datumSadnje)
+	public static void updateSadrzajReda(int redID, int brojSadnogMjesta, int PosadenoID, LocalDate datumSadnje)
 	{
 		Vector<String> what = new Vector<String>();
 		for(String s : DBConst.updateSadrzajRedaWhat) what.add(s);
 		
 		Vector<String> values = new Vector<String>();
-		values.add(String.valueOf(PosaðenoID));
+		values.add(String.valueOf(PosadenoID));
 		values.add(String.valueOf(Date.valueOf(datumSadnje).toString()));
 		
 		Vector<String> where = new Vector<String>();
@@ -160,13 +160,13 @@ public class DBUpdate {
 		Utilities.executeUpdate(Utilities.fetchStrBuilderUpdIns(DBConst.purposeUpdate, DBConst.dBSadrzajReda, what, values, where));
 	}
 	
-	public static void updateCijeliSadrzajReda(int redID, int PosaðenoID, LocalDate datumSadnje)
+	public static void updateCijeliSadrzajReda(int redID, int PosadenoID, LocalDate datumSadnje)
 	{
 		Vector<String> what = new Vector<String>();
 		for(String s : DBConst.updateCijeliSadrzajRedaWhat) what.add(s);
 		
 		Vector<String> values = new Vector<String>();
-		values.add(String.valueOf(PosaðenoID));
+		values.add(String.valueOf(PosadenoID));
 		values.add(String.valueOf(Date.valueOf(datumSadnje).toString()));
 		
 		Vector<String> where = new Vector<String>();

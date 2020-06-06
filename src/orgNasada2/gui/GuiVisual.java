@@ -46,7 +46,7 @@ public class GuiVisual {
 	private static JTable prikazPosadjenogURedu;
 	private static JTable tableKarence;
 	private static JTable tableSredstva;
-	private static JTable tablePosaðeno;
+	private static JTable tablePosadeno;
 	private static JTable tableSorta;
 	private static JTable tableNavodnjavanje;
 	private static JTable tablePodloga;
@@ -292,7 +292,7 @@ public class GuiVisual {
 				{
 				nasadInfoTable.setModel(DBSelect.getNasadKorisnika(user.getKorisnickoIme(), choiceNasadPrikaz.getSelectedItem().toString()));
 				prikazRedovaTable.setModel(DBSelect.getSadrzajReda(Integer.parseInt(nasadInfoTable.getValueAt(0, 0).toString()), DBConst.emptyString, DBConst.emptyString));
-				prikazPosadjenogURedu.setModel(DBSelect.getPosaðenoByName(""));
+				prikazPosadjenogURedu.setModel(DBSelect.getPosadenoByName(""));
 				}
 			}
 		});
@@ -456,8 +456,8 @@ public class GuiVisual {
 				
 				if(prikazRedovaTable.getSelectedRow()!=-1 & prikazRedovaTable.getSelectedColumn()!=-1)
 					{
-						String selectedPosaðeno = prikazRedovaTable.getValueAt(prikazRedovaTable.getSelectedRow(), 2).toString();
-						prikazPosadjenogURedu.setModel(DBSelect.getPosaðenoByName(selectedPosaðeno));
+						String selectedPosadeno = prikazRedovaTable.getValueAt(prikazRedovaTable.getSelectedRow(), 2).toString();
+						prikazPosadjenogURedu.setModel(DBSelect.getPosadenoByName(selectedPosadeno));
 					}
 				}
 			});		
@@ -469,10 +469,10 @@ public class GuiVisual {
 		tabNasad.add(tbNsdFooter, BorderLayout.SOUTH);
 		tbNsdFooter.setLayout(new BorderLayout(0, 0));
 		
-		JScrollPane sPanePosaðenoSelected = new JScrollPane();
-		tbNsdFooter.add(sPanePosaðenoSelected);
+		JScrollPane sPanePosadenoSelected = new JScrollPane();
+		tbNsdFooter.add(sPanePosadenoSelected);
 
-		prikazPosadjenogURedu = new JTable(DBSelect.getPosaðenoByName(""));
+		prikazPosadjenogURedu = new JTable(DBSelect.getPosadenoByName(""));
 		prikazPosadjenogURedu.setAutoCreateRowSorter(true);
 		prikazPosadjenogURedu.setColumnSelectionAllowed(true);
 		prikazPosadjenogURedu.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -485,7 +485,7 @@ public class GuiVisual {
 			}
 		});
 		
-		sPanePosaðenoSelected.setViewportView(prikazPosadjenogURedu);
+		sPanePosadenoSelected.setViewportView(prikazPosadjenogURedu);
 
 		return tabNasad;
 	}
@@ -532,26 +532,26 @@ public class GuiVisual {
 		JScrollPane scrPaneSadnica = new JScrollPane();
 		pSadnica.add(scrPaneSadnica, BorderLayout.CENTER);
 
-		tablePosaðeno = new JTable(DBSelect.getPosaðeno());
-		tablePosaðeno.setAutoCreateRowSorter(true);
-		tablePosaðeno.setColumnSelectionAllowed(true);
-		tablePosaðeno.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tablePosaðeno.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+		tablePosadeno = new JTable(DBSelect.getPosadeno());
+		tablePosadeno.setAutoCreateRowSorter(true);
+		tablePosadeno.setColumnSelectionAllowed(true);
+		tablePosadeno.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tablePosadeno.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e)
 				{
 					if(!tableSorta.getSelectionModel().isSelectionEmpty()) tableSorta.getSelectionModel().clearSelection();
 					if(!tableNavodnjavanje.getSelectionModel().isSelectionEmpty()) tableNavodnjavanje.getSelectionModel().clearSelection();
 					if(!tablePodloga.getSelectionModel().isSelectionEmpty()) tablePodloga.getSelectionModel().clearSelection();
-					if(!tablePosaðeno.getSelectionModel().isSelectionEmpty())
+					if(!tablePosadeno.getSelectionModel().isSelectionEmpty())
 					{
 						cBoxUniEditUtjeciNa.setSelectedItem("Sadnice");
-						cBoxUniEditID.setSelectedItem(tablePosaðeno.getValueAt(tablePosaðeno.getSelectedRow(), 0).toString());
+						cBoxUniEditID.setSelectedItem(tablePosadeno.getValueAt(tablePosadeno.getSelectedRow(), 0).toString());
 					}
 					
 				}
 			});
-		scrPaneSadnica.setViewportView(tablePosaðeno);
+		scrPaneSadnica.setViewportView(tablePosadeno);
 
 		JPanel pSorta = new JPanel();
 		sadniceINavodnjavanje.add(pSorta, "7, 1, 4, 5, fill, fill");
@@ -568,7 +568,7 @@ public class GuiVisual {
 			@Override
 			public void valueChanged(ListSelectionEvent e)
 				{
-				if(!tablePosaðeno.getSelectionModel().isSelectionEmpty()) tablePosaðeno.getSelectionModel().clearSelection();
+				if(!tablePosadeno.getSelectionModel().isSelectionEmpty()) tablePosadeno.getSelectionModel().clearSelection();
 				if(!tableNavodnjavanje.getSelectionModel().isSelectionEmpty()) tableNavodnjavanje.getSelectionModel().clearSelection();
 				if(!tablePodloga.getSelectionModel().isSelectionEmpty()) tablePodloga.getSelectionModel().clearSelection();
 				if(!tableSorta.getSelectionModel().isSelectionEmpty())
@@ -595,7 +595,7 @@ public class GuiVisual {
 			@Override
 			public void valueChanged(ListSelectionEvent e)
 				{
-				if(!tablePosaðeno.getSelectionModel().isSelectionEmpty()) tablePosaðeno.getSelectionModel().clearSelection();
+				if(!tablePosadeno.getSelectionModel().isSelectionEmpty()) tablePosadeno.getSelectionModel().clearSelection();
 				if(!tableSorta.getSelectionModel().isSelectionEmpty()) tableSorta.getSelectionModel().clearSelection();
 				if(!tablePodloga.getSelectionModel().isSelectionEmpty()) tablePodloga.getSelectionModel().clearSelection();
 				if(!tableNavodnjavanje.getSelectionModel().isSelectionEmpty())
@@ -622,7 +622,7 @@ public class GuiVisual {
 			@Override
 			public void valueChanged(ListSelectionEvent e)
 				{
-				if(!tablePosaðeno.getSelectionModel().isSelectionEmpty()) tablePosaðeno.getSelectionModel().clearSelection();
+				if(!tablePosadeno.getSelectionModel().isSelectionEmpty()) tablePosadeno.getSelectionModel().clearSelection();
 				if(!tableSorta.getSelectionModel().isSelectionEmpty()) tableSorta.getSelectionModel().clearSelection();
 				if(!tableNavodnjavanje.getSelectionModel().isSelectionEmpty()) tableNavodnjavanje.getSelectionModel().clearSelection();
 				if(!tablePodloga.getSelectionModel().isSelectionEmpty())
@@ -771,7 +771,7 @@ public class GuiVisual {
 	
 	public static int getSelectedVockaID()
 	{
-		return Integer.valueOf(tablePosaðeno.getValueAt(tablePosaðeno.getSelectedRow(), 0).toString()).intValue();
+		return Integer.valueOf(tablePosadeno.getValueAt(tablePosadeno.getSelectedRow(), 0).toString()).intValue();
 	}
 	public static int getSelectedSortaID()
 	{

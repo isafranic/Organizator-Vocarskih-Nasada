@@ -41,14 +41,14 @@ public class DBInsert {
 		return unesiSadrzajReda(redID, 1, brojMjesta, LocalDate.now());
 	}
 	
-	public static int unesiSadrzajReda(int redID, int posaðenoID, int brojMjesta, LocalDate datumSadnje)
+	public static int unesiSadrzajReda(int redID, int PosadenoID, int brojMjesta, LocalDate datumSadnje)
 	{
 		Vector<String> what = new Vector<String>();
 		for(String s: DBConst.unesiSadrzajRedaWhat) what.add(s);
 		
 		Vector<String> values = new Vector<String>();
 		values.add(String.valueOf(redID));
-		values.add(String.valueOf(posaðenoID));
+		values.add(String.valueOf(PosadenoID));
 		values.add(String.valueOf(brojMjesta));
 		values.add(datumSadnje.toString());
 		
@@ -112,17 +112,17 @@ public class DBInsert {
 		return Utilities.executeUpdate(Utilities.fetchStrBuilderUpdIns(DBConst.purposeInsert, DBConst.dBUsers, what, values, DBConst.emptyVector));
 	}
 	
-	public static int unesiPosaðeno(int sorteID, int podlogeID, String nazivPosaðeno)
+	public static int unesiPosadeno(int sorteID, int podlogeID, String nazivPosadeno)
 	{
 		Vector<String> values = new Vector<String>();
 		values.add(String.valueOf(sorteID));
 		values.add(String.valueOf(podlogeID));
-		values.add(nazivPosaðeno);
+		values.add(nazivPosadeno);
 		
 		Vector<String> what = new Vector<String>();
-		for(String s : DBConst.unesiPosaðeno) what.add(s);
+		for(String s : DBConst.unesiPosadeno) what.add(s);
 		
-		return Utilities.executeUpdate(Utilities.fetchStrBuilderUpdIns(DBConst.purposeInsert, DBConst.dBPosaðeno, what, values, DBConst.emptyVector));
+		return Utilities.executeUpdate(Utilities.fetchStrBuilderUpdIns(DBConst.purposeInsert, DBConst.dBPosadeno, what, values, DBConst.emptyVector));
 	}
 	
 	public static int unesiSorte(String imeSorte, String vrstaSorte)
