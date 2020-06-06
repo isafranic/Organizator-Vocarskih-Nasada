@@ -15,20 +15,23 @@ public class GuiController
 	private static final Logger logger = Logger.getLogger(GuiVisual.class);
 		
 	@SuppressWarnings("unused")
-	public static boolean loginUser(String username, char[] password)
+	public static String loginUser(String username, char[] password)
 	{
 		StringBuilder sqlQuery = new StringBuilder();
 		StringBuilder pass = new StringBuilder();
 		for(char c: password) pass.append(c);
 		sqlQuery.append("SELECT * FROM users WHERE korisnickoIme = '" + username +"' AND sifra = '" + pass + "' LIMIT 1");
 		logger.info(sqlQuery);
-		Korisnik user = new Korisnik(Utilities.query2Korisnik(sqlQuery));
-			if(user != null)
-			{
+		try {
+				Korisnik user = new Korisnik(Utilities.query2Korisnik(sqlQuery));
 				GuiVisual.setUser(user);
-				return true;
-			}
-			return false;
+				return "1";
+		}
+		catch(java.lang.NullPointerException exc)
+		{
+			logger.warn("Login error: " + exc);
+			return "Pogreška pri loginu, molim provjerite svoje podatke";
+		}
 	}
 
 	public static boolean registerUser(String username, String ime, String password, String passwordConfirm)

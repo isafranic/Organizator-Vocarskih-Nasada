@@ -13,6 +13,14 @@ public class Korisnik {
 		this.lozinka = pss;
 	}
 	
+	public Korisnik(Korisnik user)
+	{
+		this.idUser = user.getId();
+		this.ime = user.getIme();
+		this.korisnickoIme = user.getKorisnickoIme();
+		this.lozinka = user.getLozinka();
+	}
+	
 	public Korisnik(int id, String ime, String usn, String pss)
 	{
 		this.idUser = id;
@@ -47,13 +55,5 @@ public class Korisnik {
 	}
 	public void setIme(String ime) {
 		this.ime = ime;
-	}
-	
-	// TEST KONSTRUKTOR
-	public Korisnik(Korisnik user)
-	{
-		this.ime = user.getIme();
-		this.korisnickoIme = user.getKorisnickoIme();
-		this.lozinka = user.getLozinka();
 	}
 }

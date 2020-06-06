@@ -70,7 +70,7 @@ public class LoginDialog extends JDialog{
 			cPLogin.add(passwordField, "3, 3, fill, center");
 		}
 		{
-			JLabel lblErrorMessage = new JLabel("    ");
+			lblErrorMessage = new JLabel("    ");
 			lblErrorMessage.setPreferredSize(new Dimension(120,10));
 			cPLogin.add(lblErrorMessage, "2, 4, 2, 1, fill, center");
 		}
@@ -83,7 +83,8 @@ public class LoginDialog extends JDialog{
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						logger.info("Login attempt");
-						if(GuiController.loginUser(textField.getText(), passwordField.getPassword())) setVisible(false);
+						String msg = GuiController.loginUser(textField.getText(), passwordField.getPassword());
+						if(msg=="1") setVisible(false);
 						else lblErrorMessage.setText("Doslo je do pogreske, molim pokusajte ponovno!");
 						}
 				});

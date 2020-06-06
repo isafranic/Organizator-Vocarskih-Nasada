@@ -84,10 +84,8 @@ public class GuiVisual {
 	 * Create the application.
 	 */
 	public GuiVisual() {
-		while(user == null) {
 			LoginDialog login = new LoginDialog(frame);
 			login.setVisible(true);
-		}
 		initialize(user);
 	}
 
