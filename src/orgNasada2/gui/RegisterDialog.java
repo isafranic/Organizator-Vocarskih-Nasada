@@ -38,13 +38,15 @@ public class RegisterDialog extends JDialog {
 	private static final Logger logger = Logger.getLogger(DBSelect.class);
 
 	public RegisterDialog(JFrame parentWindow) {
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 250);
 		setModalityType(DEFAULT_MODALITY_TYPE);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("4dlu:grow"),
+				ColumnSpec.decode("50dlu:grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("50dlu:grow"),
 				FormSpecs.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("50dlu:grow"),
@@ -58,6 +60,9 @@ public class RegisterDialog extends JDialog {
 				RowSpec.decode("20dlu"),
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				RowSpec.decode("20dlu"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("20dlu"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
 				RowSpec.decode("4dlu:grow"),}));
 		
 			JLabel lblUsername = new JLabel("  Korisnicko Ime ");
@@ -66,10 +71,10 @@ public class RegisterDialog extends JDialog {
 			tFieldUsername = new JTextField();
 			contentPanel.add(tFieldUsername, "4, 2, fill, center");
 			tFieldUsername.setColumns(5);
-		
-			JLabel lblUsernameError = new JLabel("     ");
-			lblUsernameError.setForeground(Color.RED);
-			contentPanel.add(lblUsernameError, "6, 2");
+			
+				JLabel lblUsernameError = new JLabel("     ");
+				lblUsernameError.setForeground(Color.RED);
+				contentPanel.add(lblUsernameError, "6, 2, fill, fill");
 		
 			JLabel lblImeIPrezime = new JLabel("  Ime i Prezime");
 			contentPanel.add(lblImeIPrezime, "2, 4, right, center");
@@ -77,10 +82,10 @@ public class RegisterDialog extends JDialog {
 			tFieldImeIPrezime = new JTextField();
 			contentPanel.add(tFieldImeIPrezime, "4, 4, fill, default");
 			tFieldImeIPrezime.setColumns(5);
-		
-			JLabel lblImeIPrezimeError = new JLabel("     ");
-			lblImeIPrezimeError.setForeground(Color.RED);
-			contentPanel.add(lblImeIPrezimeError, "6, 4");
+			
+				JLabel lblImeIPrezimeError = new JLabel("     ");
+				lblImeIPrezimeError.setForeground(Color.RED);
+				contentPanel.add(lblImeIPrezimeError, "6, 4, fill, fill");
 		
 			JLabel lblPass = new JLabel("  Lozinka:");
 			contentPanel.add(lblPass, "2, 6, right, center");
@@ -93,14 +98,14 @@ public class RegisterDialog extends JDialog {
 	
 			passwordField_1 = new JPasswordField();
 			contentPanel.add(passwordField_1, "4, 8, fill, default");
-		
-			JLabel lblPassError = new JLabel("     ");
-			lblPassError.setForeground(Color.RED);
-			contentPanel.add(lblPassError, "6, 8");
+			
+				JLabel lblPassError = new JLabel("     ");
+				lblPassError.setForeground(Color.RED);
+				contentPanel.add(lblPassError, "6, 8, fill, fill");
 		
 			lblRegisterError = new JLabel("");
 			lblRegisterError.setForeground(Color.RED);
-			contentPanel.add(lblRegisterError, "2, 10, 5, 1, center, center");
+			contentPanel.add(lblRegisterError, "2, 10, 5, 1, fill, fill");
 		
 			JPanel buttonPane = new JPanel();
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
@@ -109,8 +114,8 @@ public class RegisterDialog extends JDialog {
 				JButton RegisterButton = new JButton("Register");
 				RegisterButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						boolean state = GuiController.registerUser(tFieldUsername.getText(), tFieldImeIPrezime.getText(), String.valueOf(passwordField.getPassword()),String.valueOf(passwordField_1.getPassword()));
-						if(state) 
+						int state = GuiController.registerUser(tFieldUsername.getText(), tFieldImeIPrezime.getText(), String.valueOf(passwordField.getPassword()),String.valueOf(passwordField_1.getPassword()));
+						if(state == 1) 
 						{
 							LoginDialog login = new LoginDialog(parentWindow);
 							setVisible(false);

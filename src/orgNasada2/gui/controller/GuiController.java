@@ -29,15 +29,14 @@ public class GuiController
 		}
 		catch(java.lang.NullPointerException exc)
 		{
-			logger.warn("Login error: " + exc);
-			return "Pogreška pri loginu, molim provjerite svoje podatke";
+			logger.warn("Login error - Neuspjesan login - " + exc);
+			return "Pogreška pri loginu, molim provjerite svoje podatke. ";
 		}
 	}
 
-	public static boolean registerUser(String username, String ime, String password, String passwordConfirm)
+	public static int registerUser(String username, String ime, String password, String passwordConfirm)
 	{	
-		if(DBInsert.unesiKorisnika(username, password.toString(), ime)==1)	return true;
-		return false;
+		return DBInsert.unesiKorisnika(username, password.toString(), ime);
 	}
 
 	public static void tretirajVocnjakSaSredstvom(String sredstvo, String nasad) {

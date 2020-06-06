@@ -53,7 +53,7 @@ public class LoginDialog extends JDialog{
 				RowSpec.decode("default:grow"),}));
 		{
 			JLabel lblKorisnickoIme = new JLabel("  Korisnicko Ime:");
-			lblKorisnickoIme.setPreferredSize(new Dimension(100,10));
+			lblKorisnickoIme.setPreferredSize(new Dimension(100,15));
 			cPLogin.add(lblKorisnickoIme, "2, 2, center, center");
 		}
 		{
@@ -72,7 +72,7 @@ public class LoginDialog extends JDialog{
 		{
 			lblErrorMessage = new JLabel("    ");
 			lblErrorMessage.setPreferredSize(new Dimension(120,10));
-			cPLogin.add(lblErrorMessage, "2, 4, 2, 1, fill, center");
+			cPLogin.add(lblErrorMessage, "2, 4, 2, 1, fill, fill");
 		}
 		{
 			JPanel bPLoginConfirm = new JPanel();
