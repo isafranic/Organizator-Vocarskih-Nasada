@@ -46,11 +46,7 @@ public class EntryDialog extends JDialog {
 	private Vector<RedInfo> redoviNasada;
 	private static Nasad nasad;
 	private JPanel buttonPane;
-	private JTextField tfNewRedBrojMjesta;
-	private JTextField tFBrojMjestaURedu;
 	private boolean check;
-	private JTextField tFieldFirst;
-	private JLabel lblNewLabel;
 	private JButton btnNewButton;
 	private JFrame window;
 
@@ -150,21 +146,21 @@ public class EntryDialog extends JDialog {
 		/*
 		 * Text Field tF
 		 * 1 - Naziv 
-		 * 2 - Lokacija
-		 * 3 - Povrsina
-		 * 4 - Broj Redova
-		 * 5 - Arkod ID
+		 * 2 - Arkod ID
+		 * 3 - Lokacija
+		 * 4 - Povrsina
+		 * 5 - Broj Redova
 		 */
 		/*
 		 * Check Box
 		 * cBoxChoice1 - Navodnjavanje
 		 */
 		insertPanel.setLayout(new FormLayout(new ColumnSpec[] {
-				ColumnSpec.decode("4dlu:grow"),
-				ColumnSpec.decode("75dlu"),
+				ColumnSpec.decode("4dlu"),
+				ColumnSpec.decode("75dlu:grow"),
 				FormSpecs.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("75dlu:grow"),
-				ColumnSpec.decode("4dlu:grow"),},
+				ColumnSpec.decode("4dlu"),},
 			new RowSpec[] {
 				RowSpec.decode("4dlu:grow"),
 				RowSpec.decode("20dlu"),
@@ -181,48 +177,68 @@ public class EntryDialog extends JDialog {
 				RowSpec.decode("4dlu:grow"),}));
 		
 		setTitle("Unos novog nasada (1)");
-		JLabel lblNaziv = new JLabel("Naziv:");
-		insertPanel.add(lblNaziv, "2, 1, right, center");
-		tF1 = new JTextField();
-		insertPanel.add(tF1, "3, 1, fill, default");
-		tF1.setColumns(10);
 		
+		// tF1 start
+		JLabel lblNaziv = new JLabel("Naziv:");
+		insertPanel.add(lblNaziv, "2, 2, right, center");
+		
+		tF1 = new JTextField();
+		tF1.setColumns(10);
+		insertPanel.add(tF1, "4, 2, fill, default");
+		// tF1 end
+		
+		// tF2 start
 		JLabel lblArkodID = new JLabel("Arkod ID: ");
-		insertPanel.add(lblArkodID, "2, 2, right, center");
-		tF5 = new JTextField();
-		insertPanel.add(tF5, "3, 2, fill, default");
-		tF5.setColumns(10);
-	
-		JLabel lblLokacija = new JLabel("Lokacija:");
-		insertPanel.add(lblLokacija, "2, 3, right, center");
+		insertPanel.add(lblArkodID, "2, 4, right, center");
+		
 		tF2 = new JTextField();
-		insertPanel.add(tF2, "3, 3, fill, default");
 		tF2.setColumns(10);
-	
-		JLabel lblPovrsina = new JLabel("Povrsina:");
-		insertPanel.add(lblPovrsina, "2, 4, right, center");
+		insertPanel.add(tF2, "4, 4, fill, default");
+		// tF2 end
+		
+		// tf3 start
+		JLabel lblLokacija = new JLabel("Lokacija:");
+		insertPanel.add(lblLokacija, "2, 6, right, center");
+		
 		tF3 = new JTextField();
-		insertPanel.add(tF3, "3, 4, fill, default");
 		tF3.setColumns(10);
-	
-		JLabel lblBrojRedova = new JLabel("Broj redova:");
-		insertPanel.add(lblBrojRedova, "2, 5, right, center");
+		insertPanel.add(tF3, "4, 6, fill, default");
+		// tF3 end
+		
+		// tF4 start
+		JLabel lblPovrsina = new JLabel("Povrsina:");
+		insertPanel.add(lblPovrsina, "2, 8, right, center");
+		
 		tF4 = new JTextField();
-		insertPanel.add(tF4, "3, 5, fill, default");
 		tF4.setColumns(10);
+		insertPanel.add(tF4, "4, 8, fill, default");
+		// tF4 end
+		
+		// tF5 start
+		JLabel lblBrojRedova = new JLabel("Broj redova:");
+		insertPanel.add(lblBrojRedova, "2, 10, right, center");
+		
+		tF5 = new JTextField();
+		tF5.setColumns(10);
+		insertPanel.add(tF5, "4, 10, fill, default");
+		// tF5 end
 	
+		// cBoxChoice 1 start
 		JLabel lblNavodnjavanje = new JLabel("Navodnjavanje:");
-		insertPanel.add(lblNavodnjavanje, "2, 6, right, center");
+		insertPanel.add(lblNavodnjavanje, "2, 12, right, center");
+		
 		cBoxChoice1 = new JComboBox<String>();
 		for(String s : DBSelect.getNavodnjavanjeVec()) cBoxChoice1.addItem(s);
-		insertPanel.add(cBoxChoice1, "3, 6, fill, default");
-	
-		JButton okButton = new JButton("OK");
-		okButton.addActionListener(new ActionListener() {
+		insertPanel.add(cBoxChoice1, "4, 12, fill, default");
+		// cBoxChoice 2 end
+		
+		// button start
+		btnNewButton = new JButton("OK");
+		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 					int navId = DBSelect.getNavodnjavanjeID(cBoxChoice1.getSelectedItem().toString());
-					if(DBInsert.unesiNasad(user.getId(),tF5.getText(), tF1.getText(), tF3.getText(),
-							tF2.getText(), navId, 1, tF4.getText()) > 0)
+					if(DBInsert.unesiNasad(user.getId(),tF2.getText(), tF1.getText(), tF4.getText(),
+							tF4.getText(), navId, 1, tF5.getText()) > 0)
 						{
 						Utilities.popuniNasadDefault(DBSelect.getNasadKorisnikaPod(user.getId(), tF1.getText()), window);
 						dispose();
@@ -230,9 +246,10 @@ public class EntryDialog extends JDialog {
 						}
 				}
 			});
-		okButton.setActionCommand("OK");
-		buttonPane.add(okButton);
-		getRootPane().setDefaultButton(okButton);
+		btnNewButton.setActionCommand("OK");
+		buttonPane.add(btnNewButton);
+		getRootPane().setDefaultButton(btnNewButton);
+		// button end
 
 	}
 
@@ -240,9 +257,10 @@ public class EntryDialog extends JDialog {
 	{
 		/*
 		 * Text Field - tF 
-		 * tF1 - Lokacija
-		 * tF2 - Povrsina
-		 * tF3 - Broj Redova
+		 * tF1 - ArkodID
+		 * tF2 - Lokacija
+		 * tF3 - Povrsina
+		 * tF4 - Broj Redova
 		 */
 		/*
 		 * Check Box - cBoxChoice
@@ -270,19 +288,36 @@ public class EntryDialog extends JDialog {
 				RowSpec.decode("20dlu"),
 				RowSpec.decode("4dlu:grow"),}));
 		
-		cBoxChoice1 = new JComboBox<String>();
-		cBoxChoice2 = new JComboBox<String>();
-		setTitle("Promjena Postojeceg Nasada");			
-		for(String s : DBSelect.getImenaNasadaKorisnika(user.getKorisnickoIme())) cBoxChoice1.addItem(s);
+		setTitle("Promjena Postojeceg Nasada");	
 		
-		for(String s : DBSelect.getNavodnjavanjeVec()) cBoxChoice2.addItem(s);
-		
+		// cBoxChoice 1 start
 		JLabel lblNaziv = new JLabel("Naziv:");
 		insertPanel.add(lblNaziv, "2, 2, right, center");
+		
+		cBoxChoice1 = new JComboBox<String>();
+		insertPanel.add(cBoxChoice1, "4, 2, fill, default");
+		for(String s : DBSelect.getImenaNasadaKorisnika(user.getKorisnickoIme())) cBoxChoice1.addItem(s);
 		cBoxChoice1.setSelectedItem(GuiVisual.getNasadNazivFromTable());
+		// cBoxChoice 1 Action listener below
+		// CBoxChoice 1 end
+		
 		nasad = new Nasad(
 				DBSelect.getNasadKorisnikaPod(user.getId(), cBoxChoice1.getSelectedItem().toString())
 				);
+		
+		// cBoxChoice 2 start
+		JLabel lblNavodnjavanje = new JLabel("Navodnjavanje:");
+		insertPanel.add(lblNavodnjavanje, "2, 12, right, center");
+		
+		cBoxChoice2 = new JComboBox<String>();
+		insertPanel.add(cBoxChoice2, "4, 12, fill, default");
+		
+		for(String s : DBSelect.getNavodnjavanjeVec()) cBoxChoice2.addItem(s);
+		cBoxChoice2.setSelectedItem(DBSelect.getNavodnjavanjeNaziv(nasad.getNavodnjavanjeID()));
+		//cBoxChoice 2 end
+		
+		// cBoxChoice 1 listener start
+		// cBoxChoice 1 declaration above
 		cBoxChoice1.addActionListener(new ActionListener() 
 			{
 			public void actionPerformed(ActionEvent e) 
@@ -290,61 +325,67 @@ public class EntryDialog extends JDialog {
 				if(check)
 				{
 				nasad = new Nasad(DBSelect.getNasadKorisnikaPod(user.getId(), cBoxChoice1.getSelectedItem().toString()));
-				tF1.setText(nasad.getLokacija());
-				tF2.setText(String.valueOf(nasad.getPovrsina()));
-				tF3.setText(String.valueOf(nasad.getBrojRedova()));
-				cBoxChoice2.setSelectedItem(DBSelect.getNavodnjavanjeNaziv(nasad.getNavodnjavanjeID()));
+					tF1.setText(nasad.getLokacija());
+					tF2.setText(String.valueOf(nasad.getPovrsina()));
+					tF3.setText(String.valueOf(nasad.getBrojRedova()));
+					cBoxChoice2.setSelectedItem(DBSelect.getNavodnjavanjeNaziv(nasad.getNavodnjavanjeID()));
 				}
 				else check=true;
 				}
 			});
-		insertPanel.add(cBoxChoice1, "4, 2, fill, default");
-				
-		lblNewLabel = new JLabel("Arkod ID:");
-		insertPanel.add(lblNewLabel, "2, 4, right, default");
-				tF5 = new JTextField();			
-				tF5.setColumns(10);
-				tF5.setText(nasad.getArkodID());
-				insertPanel.add(tF5, "4, 4, fill, default");
-				
-				JLabel lblLokacija = new JLabel("Lokacija:");
-				insertPanel.add(lblLokacija, "2, 6, right, center");
-				tF1 = new JTextField();
-				tF1.setColumns(10);
-				tF1.setText(nasad.getLokacija());		
-				insertPanel.add(tF1, "4, 6, fill, default");
-				
-				JLabel lblPovrsina = new JLabel("Povrsina:");
-				insertPanel.add(lblPovrsina, "2, 8, right, center");			
-				tF2 = new JTextField();
-				insertPanel.add(tF2, "4, 8, fill, default");
-				tF2.setText(String.valueOf(nasad.getPovrsina()));
-				tF2.setColumns(10);
-			
-				JLabel lblBrojRedova = new JLabel("Broj redova:");
-				insertPanel.add(lblBrojRedova, "2, 10, right, center");
-			tF3 = new JTextField();
-			insertPanel.add(tF3, "4, 10, fill, default");
-			tF3.setColumns(10);
-			tF3.setText(String.valueOf(nasad.getBrojRedova()));
 		
-			JLabel lblNavodnjavanje = new JLabel("Navodnjavanje:");
-			insertPanel.add(lblNavodnjavanje, "2, 12, right, center");
-		insertPanel.add(cBoxChoice2, "4, 12, fill, default");
-		cBoxChoice2.setSelectedItem(DBSelect.getNavodnjavanjeNaziv(nasad.getNavodnjavanjeID()));
-	
-		JButton okButton = new JButton("OK");
-		okButton.addActionListener(new ActionListener() {
+		// cBoxChoice 1 listener end
+		
+		// tf1 start
+		JLabel arkodIDLbl = new JLabel("Arkod ID:");
+		insertPanel.add(arkodIDLbl, "2, 4, right, default");		
+		tF1 = new JTextField();			
+		tF1.setColumns(10);
+		tF1.setText(nasad.getArkodID());
+		insertPanel.add(tF1, "4, 4, fill, default");
+		// tf1 end
+		
+		// tf2 start
+		JLabel lblLokacija = new JLabel("Lokacija:");
+		insertPanel.add(lblLokacija, "2, 6, right, center");				
+		tF2 = new JTextField();
+		tF2.setColumns(10);
+		tF2.setText(nasad.getLokacija());		
+		insertPanel.add(tF2, "4, 6, fill, default");
+		// tf2 end
+		
+		// tf3 start
+		JLabel lblPovrsina = new JLabel("Povrsina:");
+		insertPanel.add(lblPovrsina, "2, 8, right, center");			
+		tF3 = new JTextField();
+		tF3.setColumns(10);
+		tF3.setText(String.valueOf(nasad.getPovrsina()));
+		insertPanel.add(tF3, "4, 8, fill, default");		
+		// tf3 end
+		
+		// tf4 start
+		JLabel lblBrojRedova = new JLabel("Broj redova:");
+		insertPanel.add(lblBrojRedova, "2, 10, right, center");
+		tF4 = new JTextField();
+		tF4.setColumns(10);
+		tF4.setText(String.valueOf(nasad.getBrojRedova()));
+		insertPanel.add(tF4, "4, 10, fill, default");
+		// tf4 end
+		
+		// button start
+		btnNewButton = new JButton("OK");
+		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 					int navId = DBSelect.getNavodnjavanjeID(cBoxChoice2.getSelectedItem().toString());
-					if(DBUpdate.updateNasad(nasad.getIdNasad(),tF5.getText(), user.getId(), 
-							cBoxChoice1.getSelectedItem().toString(), Integer.valueOf(tF2.getText()).intValue(),
-							tF1.getText(), navId, 1, Integer.valueOf(tF3.getText()).intValue())) setVisible(false);
+					if(DBUpdate.updateNasad(nasad.getIdNasad(),tF1.getText(), user.getId(), 
+							cBoxChoice1.getSelectedItem().toString(), Integer.valueOf(tF3.getText()).intValue(),
+							tF2.getText(), navId, 1, Integer.valueOf(tF4.getText()).intValue())) setVisible(false);
 				}
 			});
-		okButton.setActionCommand("OK");
-		buttonPane.add(okButton);
-		getRootPane().setDefaultButton(okButton);
+		btnNewButton.setActionCommand("OK");
+		buttonPane.add(btnNewButton);
+		getRootPane().setDefaultButton(btnNewButton);
+		// button end
 				
 	}
 
@@ -354,6 +395,9 @@ public class EntryDialog extends JDialog {
 		 * Check Box - cBoxChoice
 		 * 1 - Broj Reda
 		 * 2 - Nasad
+		 * 
+		 * Text Field - tF
+		 * 1 - Broj mjesta u redu
 		 */
 		insertPanel.setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("4dlu:grow"),
@@ -373,10 +417,22 @@ public class EntryDialog extends JDialog {
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				RowSpec.decode("4dlu:grow"),}));
 		
+		// cBoxChoice 1 start
+		JLabel lblRedBroj = new JLabel("Red broj: ");
+		insertPanel.add(lblRedBroj, "2, 4, right, default");
+		
+		cBoxChoice1 = new JComboBox<String>();
+		insertPanel.add(cBoxChoice1, "4, 4, fill, default");
+		// cBoxChoice 1 end
+		
+		// cBoxChoice 2 start		
 		JLabel lblNasad = new JLabel("Nasad: ");
 		insertPanel.add(lblNasad, "2, 2, right, center");
-		for(String s : DBSelect.getImenaNasadaKorisnika(user.getKorisnickoIme())) cBoxChoice2.addItem(s);
+		
 		cBoxChoice2 = new JComboBox<String>();
+		for(String s : DBSelect.getImenaNasadaKorisnika(user.getKorisnickoIme())) cBoxChoice2.addItem(s);	
+		insertPanel.add(cBoxChoice2, "4, 2, fill, default");
+		
 		cBoxChoice2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				nasad = new Nasad(DBSelect.getNasadKorisnikaPod(user.getId(), cBoxChoice2.getSelectedItem().toString()));
@@ -384,33 +440,29 @@ public class EntryDialog extends JDialog {
 				for(int i=1; i<nasad.getBrojRedova()+1; i++) cBoxChoice1.addItem(String.valueOf(i));
 			}
 		});
-		insertPanel.add(cBoxChoice2, "4, 2, fill, default");
+		// cBoxChoice 2 end
 		
-		JLabel lblRedBroj = new JLabel("Red broj: ");
-		insertPanel.add(lblRedBroj, "2, 4, right, default");
-		
-		
-		JButton btnUnesiBrojMjestaURedu = new JButton("Unesi broj mjesta (3)");
-		btnUnesiBrojMjestaURedu.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				DBUpdate.updateRed(nasad.getIdNasad(),
-						Integer.valueOf(cBoxChoice1.getSelectedItem().toString()),
-						Integer.valueOf(tFBrojMjestaURedu.getText()));
-			}
-		});
-		
-		cBoxChoice1 = new JComboBox<String>();
-		
-		insertPanel.add(cBoxChoice1, "4, 4, fill, default");
-		
+		// tF1 start
 		JLabel lblBrojMjestaURedu = new JLabel("Broj mjesta u redu: ");
 		insertPanel.add(lblBrojMjestaURedu, "2, 6, right, default");
 		
-		tFBrojMjestaURedu = new JTextField();
-		insertPanel.add(tFBrojMjestaURedu, "4, 6, fill, center");
-		tFBrojMjestaURedu.setColumns(10);
-		buttonPane.add(btnUnesiBrojMjestaURedu, "2, 8, 3, 1, center, center");
+		tF1 = new JTextField();
+		tF1.setColumns(10);
+		insertPanel.add(tF1, "4, 6, fill, center");
+		// tF1 end
 		
+		// button start
+		btnNewButton = new JButton("Unesi broj mjesta (3)");
+		buttonPane.add(btnNewButton, "2, 8, 3, 1, center, center");
+		
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DBUpdate.updateRed(nasad.getIdNasad(),
+						Integer.valueOf(cBoxChoice1.getSelectedItem().toString()),
+						Integer.valueOf(tF1.getText()));
+			}
+		});
+		// button end		
 	
 	}
 	
@@ -419,6 +471,8 @@ public class EntryDialog extends JDialog {
 		/*
 		 * Check Box - cBoxChoice
 		 * 1 - Nasad
+		 * Text Field - tF
+		 * 1 - Broj mjesta u redu
 		 */
 		insertPanel.setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("4dlu:grow"),
@@ -435,32 +489,38 @@ public class EntryDialog extends JDialog {
 				RowSpec.decode("4dlu:grow"),}));
 		
 		setTitle("Unos reda (4)");
+		
+		// cBoxChoice 1 start
 		JLabel lblDodajRedWhereInfo = new JLabel("Dodavanje reda:");
 		insertPanel.add(lblDodajRedWhereInfo, "2, 2, right, center");
-		for(String s: DBSelect.getImenaNasadaKorisnika(user.getKorisnickoIme())) cBoxChoice1.addItem(s);
 		
 		cBoxChoice1 = new JComboBox<String>();
+		for(String s: DBSelect.getImenaNasadaKorisnika(user.getKorisnickoIme())) cBoxChoice1.addItem(s);		
 		insertPanel.add(cBoxChoice1, "4, 2, fill, default");
+		// cBoxChoice 1 end
 		
+		// tF1 start
 		JLabel lblDodajRedBrojMjesta = new JLabel("Broj mjesta u redu:");
 		insertPanel.add(lblDodajRedBrojMjesta, "2, 4, right, center");
 		
-		tfNewRedBrojMjesta = new JTextField();
-		insertPanel.add(tfNewRedBrojMjesta, "4, 4, fill, center");
-		tfNewRedBrojMjesta.setColumns(10);
+		tF1 = new JTextField();
+		tF1.setColumns(10);
+		insertPanel.add(tF1, "4, 4, fill, center");		
+		// tf1 end
 		
-		JButton btnCommitNewRed = new JButton("Unesi Red");
-		btnCommitNewRed.addActionListener(new ActionListener() {
+		// button start
+		btnNewButton = new JButton("Unesi Red");
+		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int idNasad = DBSelect.getIdNasada(user, cBoxChoice1.getSelectedItem().toString());
 				DBInsert.unesiRed(idNasad,
-				DBSelect.getBrojRedovaUNasadu(idNasad),
-				Integer.valueOf(tfNewRedBrojMjesta.getText()));
-				
-				DBUpdate.updateNasadIncBrojRedova(idNasad, user.getId());
+						DBSelect.getBrojRedovaUNasadu(idNasad),
+						Integer.valueOf(tF1.getText()));				
+						DBUpdate.updateNasadIncBrojRedova(idNasad, user.getId());
 			}
 		});
-		buttonPane.add(btnCommitNewRed);
+		buttonPane.add(btnNewButton);
+		// button end
 	}
 
 	private void case5(Korisnik user)
@@ -492,16 +552,20 @@ public class EntryDialog extends JDialog {
 				RowSpec.decode("4dlu:grow"),}));
 		
 		setTitle("Unesi sadrzaj Reda (5)");
+		
 		redoviNasada = new Vector<RedInfo>();
-		Vector<String> chosenParentWindow = new Vector<String>();
+		
+		// Predstavlja vrijednosti uzete sa glavnog prozora
+		Vector<String> chosenParentWindow = new Vector<String>();		
 		for(String s : GuiVisual.basicInfoPosadjenoSelected()) { chosenParentWindow.add(s); }
 		
+		// cBoxChoice 1 declaration and code start
 		JLabel lblPosadiNasad = new JLabel("Nasad:");
 		insertPanel.add(lblPosadiNasad, "2, 2, right, center");
-		for(String s : DBSelect.getImenaNasadaKorisnika(user.getKorisnickoIme())) cBoxChoice1.addItem(s);
-		if(!chosenParentWindow.isEmpty()) cBoxChoice1.setSelectedItem(chosenParentWindow.elementAt(0));
 		
 		cBoxChoice1 =  new JComboBox<String>();
+		for(String s : DBSelect.getImenaNasadaKorisnika(user.getKorisnickoIme())) cBoxChoice1.addItem(s);
+		if(!chosenParentWindow.isEmpty()) cBoxChoice1.setSelectedItem(chosenParentWindow.elementAt(0));		
 		cBoxChoice1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				redoviNasada.clear();
@@ -510,28 +574,18 @@ public class EntryDialog extends JDialog {
 			}
 		});
 		insertPanel.add(cBoxChoice1, "4, 2, fill, default");
+		// cBoxChoice 1 end
+		
+		// cBoxChoice 2 declaration and code start
+		JLabel lblPosadiRed = new JLabel("Red:");
+		insertPanel.add(lblPosadiRed, "2, 4, right, center");
+		
+		cBoxChoice2 =  new JComboBox<String>();		
 		for(RedInfo rI : redoviNasada)
 		{
 			cBoxChoice2.addItem(String.valueOf(rI.getBrojReda()));
-		}
-		if(!chosenParentWindow.isEmpty()) cBoxChoice2.setSelectedItem(chosenParentWindow.elementAt(1));
-		for(RedInfo rI : redoviNasada)
-			{
-			if(rI.getBrojReda() == Integer.valueOf(cBoxChoice2.getSelectedItem().toString()))
-				{
-					for(int i=1; i<rI.getBrojSadnihMjesta()+1; i++) cBoxChoice3.addItem(String.valueOf(i));
-				}
-			}
-		if(!chosenParentWindow.isEmpty()) cBoxChoice3.setSelectedItem(chosenParentWindow.elementAt(2));
+		}	
 		
-		
-		JLabel lblPosadiRed = new JLabel("Red:");
-		insertPanel.add(lblPosadiRed, "2, 4, right, center");
-		for(String s : DBSelect.getImenaSadnica()) cBoxChoice4.addItem(s);
-		if(!chosenParentWindow.isEmpty())  cBoxChoice4.setSelectedItem(chosenParentWindow.elementAt(3));
-		
-		
-		cBoxChoice2 =  new JComboBox<String>();
 		cBoxChoice2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cBoxChoice3.removeAll();
@@ -545,25 +599,45 @@ public class EntryDialog extends JDialog {
 			}
 		});
 		insertPanel.add(cBoxChoice2, "4, 4, fill, default");
+			
 		
-		JCheckBox chkBoxPopuniRed = new JCheckBox("Popuni cijeli red");
-		insertPanel.add(chkBoxPopuniRed, "4, 6");
+		if(!chosenParentWindow.isEmpty()) cBoxChoice2.setSelectedItem(chosenParentWindow.elementAt(1));
+		// cBoxChoice 2 end
 		
+		// cBoxChoice 3 declaration and code start
 		JLabel lblSadnoMjesto = new JLabel("Broj sadnog mjesta:");
 		insertPanel.add(lblSadnoMjesto, "2, 8, right, center");
 		
 		cBoxChoice3 = new JComboBox<String>();
 		insertPanel.add(cBoxChoice3, "4, 8, fill, default");
 		
-		JLabel lblSadnica = new JLabel("Sadnica:");
-		insertPanel.add(lblSadnica, "2, 10, right, center");
+		for(RedInfo rI : redoviNasada)
+		{
+		if(rI.getBrojReda() == Integer.valueOf(cBoxChoice2.getSelectedItem().toString()))
+			{
+				for(int i=1; i<rI.getBrojSadnihMjesta()+1; i++) cBoxChoice3.addItem(String.valueOf(i));
+			}
+		}
+		if(!chosenParentWindow.isEmpty()) cBoxChoice3.setSelectedItem(chosenParentWindow.elementAt(2));
+		// cBoxChoice 3 end
 		
+		// cBoxChoice 4 declaration and code start
+		JLabel lblSadnica = new JLabel("Sadnica:");
+		insertPanel.add(lblSadnica, "2, 10, right, center");		
 		
 		cBoxChoice4 =  new JComboBox<String>();
 		insertPanel.add(cBoxChoice4, "4, 10, fill, default");
 		
-		JButton btnPosadiVocku = new JButton("Posadi");
-		btnPosadiVocku.addActionListener(new ActionListener() {
+		for(String s : DBSelect.getImenaSadnica()) cBoxChoice4.addItem(s);
+		
+		if(!chosenParentWindow.isEmpty()) cBoxChoice4.setSelectedItem(chosenParentWindow.elementAt(3));
+		// cBoxChoice 4 end
+			
+		JCheckBox chkBoxPopuniRed = new JCheckBox("Popuni cijeli red");
+		insertPanel.add(chkBoxPopuniRed, "4, 6");		
+		
+		btnNewButton = new JButton("Posadi");
+		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
 					for(RedInfo rI : redoviNasada)
 					{
@@ -579,11 +653,18 @@ public class EntryDialog extends JDialog {
 					}				
 			}
 		});			
-		buttonPane.add(btnPosadiVocku);
+		buttonPane.add(btnNewButton);
 	}
 	
 	private void case6(Korisnik user)
 	{
+		/*
+		 * cBoxChoice
+		 * 1 - Sorta
+		 * 2 - Podloga
+		 * Text Field tF
+		 * 1 - Naziv vocke
+		 */
 		insertPanel.setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("4dlu:grow"),
 				ColumnSpec.decode("75dlu"),
@@ -600,43 +681,58 @@ public class EntryDialog extends JDialog {
 				RowSpec.decode("4dlu:grow"),}));
 		
 		setTitle("Unos nove vocke (6)");
-		
+		// cBoxChoice 1 start
 		JLabel lblFirst = new JLabel("Sorta: ");
 		insertPanel.add(lblFirst, "2, 2, right, default");
-		for(String s : DBSelect.getSorteVS()) cBoxChoice1.addItem(s);
 		
 		cBoxChoice1 = new JComboBox<String>();
 		insertPanel.add(cBoxChoice1, "4, 2, fill, default");
-		for(String s : DBSelect.getPodlogeVS()) cBoxChoice1.addItem(s);
 		
+		for(String s : DBSelect.getSorteVS()) cBoxChoice1.addItem(s);
+		// cBoxChoice 1 end
+		
+		// cBoxChoice 2 start		
 		JLabel lblSecond = new JLabel("Podloga ");
 		insertPanel.add(lblSecond, "2, 4, right, default");
 		
 		cBoxChoice2 = new JComboBox<String>();
 		insertPanel.add(cBoxChoice2, "4, 4, fill, default");
 		
+		for(String s : DBSelect.getPodlogeVS()) cBoxChoice2.addItem(s);
+		// cBoxChoice 2 end
+		
+		// tF1 start
 		JLabel lblThird = new JLabel("Naziv ");
 		insertPanel.add(lblThird, "2, 6, right, default");
 		
-		tFieldFirst = new JTextField();
-		insertPanel.add(tFieldFirst, "4, 6, fill, default");
-		tFieldFirst.setColumns(10);
+		tF1 = new JTextField();
+		insertPanel.add(tF1, "4, 6, fill, default");
+		tF1.setColumns(10);
+		// tF1 end
 		
-		
-		JButton btnCommit = new JButton("Unesi");
-		btnCommit.addActionListener(new ActionListener() {
+		// button commit start
+		btnNewButton = new JButton("Unesi");
+		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DBInsert.unesiPosadeno(DBSelect.getSorteID(cBoxChoice1.getSelectedItem().toString()),
 						DBSelect.getPodlogeID(cBoxChoice2.getSelectedItem().toString()),
-						tFieldFirst.getText());
+						tF1.getText());
 			}
 		});
-		buttonPane.add(btnCommit);
-		
+		buttonPane.add(btnNewButton);
+		// button commit end
 	}
 	
 	private void case7(Korisnik user)
 	{
+		/*
+		 * cBoxChoice
+		 * 1 - Sorta
+		 * 2 - Podloga
+		 * text Field tf
+		 * 1 - Naziv vocke
+		 */
+		
 		insertPanel.setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("4dlu:grow"),
 				ColumnSpec.decode("75dlu"),
@@ -652,45 +748,54 @@ public class EntryDialog extends JDialog {
 				RowSpec.decode("20dlu"),
 				RowSpec.decode("4dlu:grow"),}));
 		
-		setTitle("Promjena postojece vocke (7)");
-		
+		setTitle("Promjena postojece vocke (7)");		
 		PosadenoInfo Posadeno = new PosadenoInfo(DBSelect.getPosadenoByID(GuiVisual.getSelectedVockaID()));
 		
-		JLabel lblFirst = new JLabel("Sorta: ");
-		insertPanel.add(lblFirst, "2, 2, right, default");
-		for(String s : DBSelect.getSorteVS()) cBoxChoice1.addItem(s);
-		for(String s : DBSelect.getPodlogeVS()) cBoxChoice2.addItem(s);
+		// cBoxChoice 1 start
+		JLabel lblSorta = new JLabel("Sorta: ");
+		insertPanel.add(lblSorta, "2, 2, right, default");
 		
 		cBoxChoice1 = new JComboBox<String>();
-		cBoxChoice1.setSelectedItem(Posadeno.getSorta());
 		insertPanel.add(cBoxChoice1, "4, 2, fill, default");
 		
-		JLabel lblSecond = new JLabel("Podloga ");
-		insertPanel.add(lblSecond, "2, 4, right, default");
+		for(String s : DBSelect.getSorteVS()) cBoxChoice1.addItem(s);		
+		cBoxChoice1.setSelectedItem(Posadeno.getSorta());
+		// cBoxChoice 1 end
+		
+		// cBoxChoice 2 start
+		JLabel lblPodloga = new JLabel("Podloga ");
+		insertPanel.add(lblPodloga, "2, 4, right, default");
 		
 		cBoxChoice2 = new JComboBox<String>();
-		cBoxChoice2.setSelectedItem(Posadeno.getPodloga());
 		insertPanel.add(cBoxChoice2, "4, 4, fill, default");
 		
-		JLabel lblThird = new JLabel("Naziv ");
-		insertPanel.add(lblThird, "2, 6, right, default");
+		for(String s : DBSelect.getPodlogeVS()) cBoxChoice2.addItem(s);
+		cBoxChoice2.setSelectedItem(Posadeno.getPodloga());
+		// cBoxChoice 2 end
 		
-		tFieldFirst = new JTextField();
-		insertPanel.add(tFieldFirst, "4, 6, fill, default");
-		tFieldFirst.setColumns(10);
-		tFieldFirst.setText(Posadeno.getNazivPosadeno());
+		// tF1 start
+		JLabel lblNazivVocke = new JLabel("Naziv ");
+		insertPanel.add(lblNazivVocke, "2, 6, right, default");
 		
-		JButton btnCommit = new JButton("Unesi");
-		btnCommit.addActionListener(new ActionListener() {
+		tF1 = new JTextField();
+		tF1.setColumns(10);
+		insertPanel.add(tF1, "4, 6, fill, default");
+		tF1.setText(Posadeno.getNazivPosadeno());
+		// tF1 end
+		
+		// button commit start
+		btnNewButton = new JButton("Unesi");
+		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DBUpdate.updatePosadeno(
-						Posadeno.getIdPosadeno(), tFieldFirst.getText(), 
+						Posadeno.getIdPosadeno(), tF1.getText(), 
 						DBSelect.getSorteID(cBoxChoice1.getSelectedItem().toString()),
 								DBSelect.getPodlogeID(cBoxChoice2.getSelectedItem().toString())
 								);
 			}
 		});
-		buttonPane.add(btnCommit);
+		buttonPane.add(btnNewButton);
+		// button commit end
 	}
 	
 	private void case8(Korisnik user)
@@ -709,20 +814,31 @@ public class EntryDialog extends JDialog {
 				RowSpec.decode("4dlu:grow"),}));
 		
 		setTitle("Unos nove podloge: (8)");
+		
+		/*
+		 * Text field tF
+		 * 1 - Naziv podloge
+		 * 2 - Bujnost podloge
+		 */
+		// tf1 start
 		JLabel lblNaziv = new JLabel("Naziv: ");
 		insertPanel.add(lblNaziv, "2, 2, right, default");
 		
 		tF1 = new JTextField();
-		insertPanel.add(tF1, "4, 2, fill, default");
 		tF1.setColumns(10);
+		insertPanel.add(tF1, "4, 2, fill, default");
+		// tf1 end
 		
+		// tf2 start		
 		JLabel lblBujnost = new JLabel("Bujnost: ");
 		insertPanel.add(lblBujnost, "2, 4, right, default");
 		
 		tF2 = new JTextField();
-		insertPanel.add(tF2, "4, 4, fill, default");
 		tF2.setColumns(10);
-
+		insertPanel.add(tF2, "4, 4, fill, default");
+		// tf2 end
+		
+		// button start
 		btnNewButton = new JButton("Unesi");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -731,10 +847,16 @@ public class EntryDialog extends JDialog {
 			}
 		});
 		buttonPane.add(btnNewButton);
+		// button end
 	}
 	
 	private void case9(Korisnik user)
 	{
+		/*
+		 * Text field tF
+		 * 1 - Naziv podloge
+		 * 2 - Bujnost podloge
+		 */
 		insertPanel.setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("4dlu:grow"),
 				ColumnSpec.decode("75dlu"),
@@ -748,26 +870,30 @@ public class EntryDialog extends JDialog {
 				RowSpec.decode("20dlu"),
 				RowSpec.decode("4dlu:grow"),}));
 		
-		setTitle("Promjena podloge: (9)");
-		
+		setTitle("Promjena podloge: (9)");		
 		Podloga podloga = new Podloga(DBSelect.getPodlogeById(GuiVisual.getSelectedPodlogaID()));
 		
+		// tf1 start
 		JLabel lblNaziv = new JLabel("Naziv: ");
 		insertPanel.add(lblNaziv, "2, 2, right, default");
 		
 		tF1 = new JTextField();
-		insertPanel.add(tF1, "4, 2, fill, default");
 		tF1.setColumns(10);
+		insertPanel.add(tF1, "4, 2, fill, default");
 		tF1.setText(podloga.getNazivPodloge());
+		// tf1 end
 		
+		// tf2 start
 		JLabel lblBujnost = new JLabel("Bujnost: ");
 		insertPanel.add(lblBujnost, "2, 4, right, default");
 		
 		tF2 = new JTextField();
-		insertPanel.add(tF2, "4, 4, fill, default");
 		tF2.setColumns(10);
+		insertPanel.add(tF2, "4, 4, fill, default");
 		tF2.setText(podloga.getBujnostPodloge());
-
+		// tf2 end
+		
+		// button start
 		btnNewButton = new JButton("Unesi");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -776,10 +902,16 @@ public class EntryDialog extends JDialog {
 			}
 		});
 		buttonPane.add(btnNewButton);
+		// button end
 	}
 	
 	private void case10(Korisnik user)
-	{		
+	{	
+		/*
+		 * Text Field tf
+		 * 1 - Naziv sorte
+		 * 2 - Vrsta sorte
+		 */
 		insertPanel.setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("4dlu:grow"),
 				ColumnSpec.decode("75dlu"),
@@ -794,20 +926,26 @@ public class EntryDialog extends JDialog {
 				RowSpec.decode("4dlu:grow"),}));
 		
 		setTitle("Unos nove sorte: (10)");
+		
+		// tf1 start
 		JLabel lblNaziv = new JLabel("Naziv: ");
 		insertPanel.add(lblNaziv, "2, 2, right, default");
 		
 		tF1 = new JTextField();
 		insertPanel.add(tF1, "4, 2, fill, default");
 		tF1.setColumns(10);
-
-		JLabel lblBujnost = new JLabel("Vrsta: ");
-		insertPanel.add(lblBujnost, "2, 4, right, default");
+		// tf1 end
+		
+		// tf2 start
+		JLabel lblVrsta = new JLabel("Vrsta: ");
+		insertPanel.add(lblVrsta, "2, 4, right, default");
 		
 		tF2 = new JTextField();
 		insertPanel.add(tF2, "4, 4, fill, default");
 		tF2.setColumns(10);
-
+		// tf2 end
+		
+		// button start
 		btnNewButton = new JButton("Unesi");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -816,10 +954,16 @@ public class EntryDialog extends JDialog {
 			}
 		});
 		buttonPane.add(btnNewButton);
+		// button end
 	}
 	
 	private void case11(Korisnik user)
 	{
+		/*
+		 * Text Field tf
+		 * 1 - Naziv sorte
+		 * 2 - Vrsta Sorte
+		 */
 		insertPanel.setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("4dlu:grow"),
 				ColumnSpec.decode("75dlu"),
@@ -833,10 +977,10 @@ public class EntryDialog extends JDialog {
 				RowSpec.decode("20dlu"),
 				RowSpec.decode("4dlu:grow"),}));
 		
-		setTitle("Promjena sorte: (11)");
-		
+		setTitle("Promjena sorte: (11)");		
 		Sorta sorta = new Sorta( DBSelect.getSorteById( GuiVisual.getSelectedSortaID() ));
 		
+		// tf1 start
 		JLabel lblNaziv = new JLabel("Naziv: ");
 		insertPanel.add(lblNaziv, "2, 2, right, default");
 		
@@ -844,15 +988,19 @@ public class EntryDialog extends JDialog {
 		insertPanel.add(tF1, "4, 2, fill, default");
 		tF1.setColumns(10);
 		tF1.setText(sorta.getImeSorte());
+		// tf1 end
 		
-		JLabel lblBujnost = new JLabel("Bujnost: ");
-		insertPanel.add(lblBujnost, "2, 4, right, default");
+		// tf2 start		
+		JLabel lblVrsta = new JLabel("Vrsta: ");
+		insertPanel.add(lblVrsta, "2, 4, right, default");
 		
 		tF2 = new JTextField();
 		insertPanel.add(tF2, "4, 4, fill, default");
 		tF2.setColumns(10);
 		tF2.setText(sorta.getVrstaSorte());
+		// tf2 end
 
+		// button start
 		btnNewButton = new JButton("Unesi");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -861,10 +1009,15 @@ public class EntryDialog extends JDialog {
 			}
 		});
 		buttonPane.add(btnNewButton);
+		// button end
 	}
 	
 	private void case12(Korisnik user)
 	{
+		/*
+		 * text Field tf
+		 * 1 - Navodnjavanje
+		 */
 		insertPanel.setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("4dlu:grow"),
 				ColumnSpec.decode("75dlu"),
@@ -877,14 +1030,16 @@ public class EntryDialog extends JDialog {
 				RowSpec.decode("4dlu:grow"),}));
 		
 		setTitle("Unos navodnjavanja: (12)");
-		
+		// tf1 start
 		JLabel lblNaziv = new JLabel("Naziv: ");
 		insertPanel.add(lblNaziv, "2, 2, right, default");
 		
 		tF1 = new JTextField();
 		insertPanel.add(tF1, "4, 2, fill, default");
 		tF1.setColumns(10);
-
+		// tf1 end
+		
+		// button start
 		btnNewButton = new JButton("Unesi");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -893,10 +1048,15 @@ public class EntryDialog extends JDialog {
 			}
 		});
 		buttonPane.add(btnNewButton);
+		// button end
 	}
 	
 	private void case13(Korisnik user)
 	{
+		/*
+		 * text Field tf
+		 * 1 - Naziv navodnjavanja
+		 */
 		insertPanel.setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("4dlu:grow"),
 				ColumnSpec.decode("75dlu"),
@@ -908,9 +1068,10 @@ public class EntryDialog extends JDialog {
 				RowSpec.decode("20dlu"),
 				RowSpec.decode("4dlu:grow"),}));
 		
-		setTitle("Promjena navodnjavanja: (13)");
-		
+		setTitle("Promjena navodnjavanja: (13)");		
 		Navodnjavanje nav = new Navodnjavanje(DBSelect.getNavodnjavanje(GuiVisual.getSelectedNavodnjavanjeID()));
+		
+		// tf1 start
 		JLabel lblNaziv = new JLabel("Naziv: ");
 		insertPanel.add(lblNaziv, "2, 2, right, default");
 		
@@ -918,7 +1079,9 @@ public class EntryDialog extends JDialog {
 		insertPanel.add(tF1, "4, 2, fill, default");
 		tF1.setColumns(10);
 		tF1.setText(nav.getNazivNavodnjavanja());
-
+		// tf1 end
+		
+		//button start
 		btnNewButton = new JButton("Unesi");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -927,10 +1090,20 @@ public class EntryDialog extends JDialog {
 			}
 		});
 		buttonPane.add(btnNewButton);
+		// button end
 	}
 	
 	private void case14(Korisnik user)
 	{
+		/*
+		 * text Field tF
+		 * 1 - Naziv sredstva
+		 * 2 - Tip tretiranja
+		 * 3 - Aktivna Tvar
+		 * 4 - Svrha
+		 * 5 - Radna karenca
+		 * 6 - Konzumna karenca
+		 */
 		insertPanel.setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("4dlu:grow"),
 				ColumnSpec.decode("75dlu"),
@@ -954,48 +1127,61 @@ public class EntryDialog extends JDialog {
 		
 		setTitle("insert sredstvo (14)");
 		
+		// tF1 start
 		JLabel lblNaziv = new JLabel("Naziv:");
 		insertPanel.add(lblNaziv, "2, 2, right, center");
 		
 		tF1 = new JTextField();
-		insertPanel.add(tF1, "4, 2, fill, default");
 		tF1.setColumns(10);
+		insertPanel.add(tF1, "4, 2, fill, default");
+		// tF1 end
 		
+		// tF2 start
 		JLabel lblTip = new JLabel("Tip tretiranja:");
 		insertPanel.add(lblTip, "2, 4, right, center");
 		
 		tF2 = new JTextField();
-		insertPanel.add(tF2, "4, 4, fill, default");
 		tF2.setColumns(10);
+		insertPanel.add(tF2, "4, 4, fill, default");
+		// tF2 end
 		
+		// tF3 start
 		JLabel lblAktTvar = new JLabel("Aktivna Tvar:");
 		insertPanel.add(lblAktTvar, "2, 6, right, center");
 		
 		tF3 = new JTextField();
-		insertPanel.add(tF3, "4, 6, fill, default");
 		tF3.setColumns(10);
+		insertPanel.add(tF3, "4, 6, fill, default");
+		// tF3 end
 		
+		// tF4 start
 		JLabel lblSvrha = new JLabel("Svrha:");
 		insertPanel.add(lblSvrha, "2, 8, right, default");
 		
 		tF4 = new JTextField();
-		insertPanel.add(tF4, "4, 8, fill, default");
 		tF4.setColumns(10);
+		insertPanel.add(tF4, "4, 8, fill, default");
+		// tF4 end
 		
+		// tF5 start
 		JLabel lblKarencaRad = new JLabel("Radna karenca:");
 		insertPanel.add(lblKarencaRad, "2, 10, right, default");
 		
 		tF5 = new JTextField();
-		insertPanel.add(tF5, "4, 10, fill, default");
 		tF5.setColumns(10);
+		insertPanel.add(tF5, "4, 10, fill, default");
+		// tF5 end
 		
+		// tF6 start
 		JLabel lblKarencaKon = new JLabel("Konzumna karenca:");
 		insertPanel.add(lblKarencaKon, "2, 12, right, default");
 		
 		tF6 = new JTextField();
-		insertPanel.add(tF6, "4, 12, fill, default");
 		tF6.setColumns(10);
+		insertPanel.add(tF6, "4, 12, fill, default");
+		// tF6 end
 		
+		// button start		
 		btnNewButton = new JButton("Unesi");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -1005,10 +1191,21 @@ public class EntryDialog extends JDialog {
 			}
 		});
 		buttonPane.add(btnNewButton);
+		// button end
 	}
 
 	private void case15(Korisnik user)
 	{
+		/*
+		 * text Field tF
+		 * 1 - Naziv sredstva
+		 * 2 - Tip tretiranja
+		 * 3 - Aktivna Tvar
+		 * 4 - Svrha
+		 * 5 - Radna karenca
+		 * 6 - Konzumna karenca
+		 */
+		
 		insertPanel.setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("4dlu:grow"),
 				ColumnSpec.decode("75dlu"),
@@ -1034,14 +1231,17 @@ public class EntryDialog extends JDialog {
 		
 		Sredstvo sredstvo = new Sredstvo(DBSelect.getSredstvo(GuiVisual.getSelectedSredstvoID()));
 		
+		// tF1 start
 		JLabel lblNaziv = new JLabel("Naziv:");
-		insertPanel.add(lblNaziv, "2, 2, right, center");
+		insertPanel.add(lblNaziv, "2, 2, right, center");		
 		
 		tF1 = new JTextField();
-		insertPanel.add(tF1, "4, 2, fill, default");
 		tF1.setColumns(10);
+		insertPanel.add(tF1, "4, 2, fill, default");
 		tF1.setText(sredstvo.getNaziv());
+		// tF1 end
 		
+		// tF2 start
 		JLabel lblTip = new JLabel("Tip tretiranja:");
 		insertPanel.add(lblTip, "2, 4, right, center");
 		
@@ -1049,7 +1249,9 @@ public class EntryDialog extends JDialog {
 		insertPanel.add(tF2, "4, 4, fill, default");
 		tF2.setColumns(10);
 		tF2.setText(sredstvo.getTipTretiranja());
+		// tF2 end
 		
+		// tF3 start
 		JLabel lblAktTvar = new JLabel("Aktivna Tvar:");
 		insertPanel.add(lblAktTvar, "2, 6, right, center");
 		
@@ -1057,7 +1259,9 @@ public class EntryDialog extends JDialog {
 		insertPanel.add(tF3, "4, 6, fill, default");
 		tF3.setColumns(10);
 		tF3.setText(sredstvo.getAktivnaTvar());
+		// tF3 end
 		
+		// tF4 start
 		JLabel lblSvrha = new JLabel("Svrha:");
 		insertPanel.add(lblSvrha, "2, 8, right, default");
 		
@@ -1065,13 +1269,19 @@ public class EntryDialog extends JDialog {
 		insertPanel.add(tF4, "4, 8, fill, default");
 		tF4.setColumns(10);
 		tF4.setText(sredstvo.getSvrhaSredstva());
+		// tF4 end
+		
+		// tF5 start
 		JLabel lblKarencaRad = new JLabel("Radna karenca:");
 		insertPanel.add(lblKarencaRad, "2, 10, right, default");
 		
 		tF5 = new JTextField();
-		insertPanel.add(tF5, "4, 10, fill, default");
 		tF5.setColumns(10);
+		insertPanel.add(tF5, "4, 10, fill, default");
 		tF5.setText("" + sredstvo.getTrajanjeRadneKarenceDani());
+		// tF5 end
+		
+		// tF6 start
 		JLabel lblKarencaKon = new JLabel("Konzumna karenca:");
 		insertPanel.add(lblKarencaKon, "2, 12, right, default");
 		
@@ -1079,7 +1289,9 @@ public class EntryDialog extends JDialog {
 		insertPanel.add(tF6, "4, 12, fill, default");
 		tF6.setColumns(10);
 		tF6.setText("" + sredstvo.getTrajanjeKonzumneKarenceDani());
+		// tF6 end
 		
+		// button start 
 		btnNewButton = new JButton("Unesi");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -1091,6 +1303,7 @@ public class EntryDialog extends JDialog {
 			}
 		});
 		buttonPane.add(btnNewButton);
+		// button end
 	}
 }// class end
 

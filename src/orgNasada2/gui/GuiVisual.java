@@ -490,18 +490,22 @@ public class GuiVisual {
 	
 	public static Vector<String> basicInfoPosadjenoSelected()
 	{
-		Vector<String> tempVec = new Vector<String>();
-		int row = prikazRedovaTable.getSelectedRow();
-		tempVec.add(choiceNasadPrikaz.getSelectedItem().toString());
-		if(prikazRedovaTable.getValueAt(row, 0)== null) return null;
-		else tempVec.add(prikazRedovaTable.getValueAt(row, 0).toString());
-		if(prikazRedovaTable.getValueAt(row, 1)==null) return null;
-		else tempVec.add(prikazRedovaTable.getValueAt(row, 1).toString());
-		if(prikazRedovaTable.getValueAt(row, 2)==null) return null;
-		else tempVec.add(prikazRedovaTable.getValueAt(row, 2).toString());
-		if(prikazRedovaTable.getValueAt(row, 3)==null) return null;
-		else tempVec.add(prikazRedovaTable.getValueAt(row, 3).toString());
-		return tempVec;
+		try
+		{
+			Vector<String> tempVec = new Vector<String>();
+			int row = prikazRedovaTable.getSelectedRow();
+			tempVec.add(choiceNasadPrikaz.getSelectedItem().toString());
+			tempVec.add(prikazRedovaTable.getValueAt(row, 0).toString());
+			tempVec.add(prikazRedovaTable.getValueAt(row, 1).toString());
+			tempVec.add(prikazRedovaTable.getValueAt(row, 2).toString());
+			tempVec.add(prikazRedovaTable.getValueAt(row, 3).toString());
+			return tempVec;
+		}
+		catch(Exception exc)
+		{
+			logger.warn("Neuspjesno povlaèenje podataka sa glavnog prozora: " + exc);
+			return null;
+		}
 	}
 	
 	public static String getNasadNazivFromTable()

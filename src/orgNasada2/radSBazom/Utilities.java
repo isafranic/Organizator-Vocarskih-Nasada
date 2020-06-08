@@ -20,7 +20,7 @@ import orgNasada2.PodatkovneKlase.*;
 public class Utilities {
 	
 	private static PreparedStatement pstmt = null;
-	private static final Logger logger = Logger.getLogger(DBSelect.class);
+	private static final Logger logger = Logger.getLogger(Utilities.class);
 		
 	public static Vector<RedInfo> query2VecRedInfo(StringBuilder sqlQuery)
 	{
@@ -539,7 +539,7 @@ public class Utilities {
 	{
 		try(Connection conn = DriverManager.getConnection(DBConst.databaseURL, DBConst.databaseCredUser, DBConst.databaseCredPass))
 		{
-		logger.info(sqlQuery);
+		logger.info("executeUpdate: " + sqlQuery);
 			pstmt = conn.prepareStatement(sqlQuery.toString());
 			return pstmt.executeUpdate();
 		}
