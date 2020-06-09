@@ -870,8 +870,10 @@ public class EntryDialog extends JDialog {
 				RowSpec.decode("20dlu"),
 				RowSpec.decode("4dlu:grow"),}));
 		
-		setTitle("Promjena podloge: (9)");		
+		setTitle("Promjena podloge: (9)");	
+		System.out.println(GuiVisual.getSelectedPodlogaID());
 		Podloga podloga = new Podloga(DBSelect.getPodlogeById(GuiVisual.getSelectedPodlogaID()));
+		System.out.println(podloga.getIdPodloge());
 		
 		// tf1 start
 		JLabel lblNaziv = new JLabel("Naziv: ");
@@ -898,6 +900,7 @@ public class EntryDialog extends JDialog {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DBUpdate.updatePodloga(podloga.getIdPodloge(), tF1.getText(), tF2.getText());
+				
 				dispose();
 			}
 		});

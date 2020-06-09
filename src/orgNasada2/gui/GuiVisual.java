@@ -771,6 +771,10 @@ public class GuiVisual {
 		return sadniceINavodnjavanje;
 	}
 	
+	
+	
+	
+	
 	public static int getSelectedVockaID()
 	{
 		return Integer.valueOf(tablePosadeno.getValueAt(tablePosadeno.getSelectedRow(), 0).toString()).intValue();
@@ -791,5 +795,6 @@ public class GuiVisual {
 	{
 		return Integer.valueOf(tableSredstva.getValueAt(tableSredstva.getSelectedRow(), 0).toString()).intValue();
 	}
+	
 
 }

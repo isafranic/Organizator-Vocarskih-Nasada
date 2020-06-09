@@ -7,7 +7,7 @@ public class Podloga {
 	private String bujnostPodloge;	
 	
 	public Podloga(int idPodloge, String nazivPodloge, String bujnostPodloge) {
-		this.setIdPodloge(idPodloge);
+		this.idPodloge = idPodloge;
 		this.nazivPodloge = nazivPodloge;
 		this.bujnostPodloge = bujnostPodloge;
 	}
@@ -41,6 +41,7 @@ public class Podloga {
 	//TEST CONST
 
 	public Podloga(Podloga temp) {
+		this.idPodloge = temp.getIdPodloge();
 		this.nazivPodloge = temp.getNazivPodloge();
 		this.bujnostPodloge = temp.getBujnostPodloge();
 	}
