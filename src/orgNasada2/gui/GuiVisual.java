@@ -204,10 +204,9 @@ public class GuiVisual {
 		cBoxSredstvoTretiraj = new JComboBox<String>();
 		tbTretEditing.add(cBoxSredstvoTretiraj, "4, 2, fill, center");
 		cBoxSredstvoTretiraj.addItem("-");
+		for(String s : DBSelect.getSvaSredstvaNames()) cBoxSredstvoTretiraj.addItem(s);		
 		
-		cBoxVocnjakTretiraj = new JComboBox<String>();
-		
-		for(String s : DBSelect.getSvaSredstvaNames()) cBoxSredstvoTretiraj.addItem(s);
+		cBoxVocnjakTretiraj = new JComboBox<String>();		
 		for(String imena : DBSelect.getImenaNasadaKorisnika(user.getKorisnickoIme()))
 			cBoxVocnjakTretiraj.addItem(imena);
 		
@@ -233,6 +232,7 @@ public class GuiVisual {
 				{
 					EntryDialog ins = new EntryDialog(frame, user, 15);
 					ins.setVisible(true);
+					reloadTbTretiranje();
 				}
 			}
 		});
@@ -242,6 +242,7 @@ public class GuiVisual {
 			public void actionPerformed(ActionEvent e) {
 				EntryDialog ins = new EntryDialog(frame, user, 14);
 				ins.setVisible(true);
+				reloadTbTretiranje();
 			}
 		});
 		
@@ -249,6 +250,7 @@ public class GuiVisual {
 		btnTretirajVocnjak.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GuiController.tretirajVocnjakSaSredstvom(cBoxSredstvoTretiraj.getSelectedItem().toString(), cBoxVocnjakTretiraj.getSelectedItem().toString());
+				reloadTbTretiranje();
 			}
 		});
 		
@@ -263,6 +265,19 @@ public class GuiVisual {
 		tbTretEditing.add(btnSort, "12, 4, fill, center");
 		
 		return tBTretiranje;
+	}
+	
+	public static void reloadTbTretiranje()
+	{
+		tableKarence.setModel(DBSelect.getSveKarence());
+		tableSredstva.setModel(DBSelect.getSredstva());
+		cBoxSredstvoTretiraj.removeAll();
+		 	cBoxSredstvoTretiraj.addItem("-");
+		 	for(String s : DBSelect.getSvaSredstvaNames()) cBoxSredstvoTretiraj.addItem(s);
+		cBoxVocnjakTretiraj.removeAll();
+		 	cBoxVocnjakTretiraj.addItem("-");
+		 	for(String imena : DBSelect.getImenaNasadaKorisnika(user.getKorisnickoIme()))
+		 		cBoxVocnjakTretiraj.addItem(imena);		 
 	}
 	
 	private JPanel createNasad() {
@@ -283,7 +298,7 @@ public class GuiVisual {
 		choiceNasadPrikaz.addItem("Odaberite Nasad");		
 		for(String imena : DBSelect.getImenaNasadaKorisnika(user.getKorisnickoIme()))
 		choiceNasadPrikaz.addItem(imena);
-	
+
 		choiceNasadPrikaz.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(!choiceNasadPrikaz.getSelectedItem().toString().equals("Odaberite Nasad"))
@@ -373,10 +388,12 @@ public class GuiVisual {
 			if(!nasadInfoTable.getSelectionModel().isSelectionEmpty() ) {
 					EntryDialog ins = new EntryDialog(frame, user, 2);
 					ins.setVisible(true);
+					reloadNasadInfo();
 				}
 			if(!prikazRedovaTable.getSelectionModel().isSelectionEmpty() ) {
 					EntryDialog ins = new EntryDialog(frame, user, 5);
 					ins.setVisible(true);
+					reloadNasadInfo();
 				}
 			}
 			});
@@ -401,18 +418,19 @@ public class GuiVisual {
 						{
 							EntryDialog ins = new EntryDialog(frame, user, 1);
 							ins.setVisible(true);
+							reloadNasadInfo();
 						}
 			if(cBoxNoviNasadRed.getSelectedItem().toString().equals("Red"))
 						{
 							EntryDialog ins = new EntryDialog(frame, user, 4);
 							ins.setVisible(true);
+							reloadNasadInfo();
 						}
-			
-			choiceNasadPrikaz.removeAllItems();
-			choiceNasadPrikaz.addItem("Odaberite Nasad");
+			choiceNasadPrikaz.removeAll();
+			choiceNasadPrikaz.addItem("Odaberite Nasad");		
 			for(String imena : DBSelect.getImenaNasadaKorisnika(user.getKorisnickoIme()))
 				choiceNasadPrikaz.addItem(imena);
-					}
+					}			
 			});
 			
 			JButton btnPrikaziTrazeno = new JButton("Prikazi");
@@ -469,7 +487,7 @@ public class GuiVisual {
 		
 		JScrollPane sPanePosadenoSelected = new JScrollPane();
 		tbNsdFooter.add(sPanePosadenoSelected);
-
+	
 		prikazPosadjenogURedu = new JTable(DBSelect.getPosadenoByName(""));
 		prikazPosadjenogURedu.setAutoCreateRowSorter(true);
 		prikazPosadjenogURedu.setColumnSelectionAllowed(true);
@@ -488,31 +506,13 @@ public class GuiVisual {
 		return tabNasad;
 	}
 	
-	public static Vector<String> basicInfoPosadjenoSelected()
+	public static void reloadNasadInfo()
 	{
-		try
-		{
-			Vector<String> tempVec = new Vector<String>();
-			int row = prikazRedovaTable.getSelectedRow();
-			tempVec.add(choiceNasadPrikaz.getSelectedItem().toString());
-			tempVec.add(prikazRedovaTable.getValueAt(row, 0).toString());
-			tempVec.add(prikazRedovaTable.getValueAt(row, 1).toString());
-			tempVec.add(prikazRedovaTable.getValueAt(row, 2).toString());
-			tempVec.add(prikazRedovaTable.getValueAt(row, 3).toString());
-			return tempVec;
-		}
-		catch(Exception exc)
-		{
-			logger.warn("Neuspjesno povlaèenje podataka sa glavnog prozora: " + exc);
-			return null;
-		}
+		nasadInfoTable.setModel(DBSelect.getNasadKorisnika(user.getKorisnickoIme(), ""));
+		prikazRedovaTable.setModel(DBSelect.getSadrzajReda(0, DBConst.emptyString, DBConst.emptyString));
+		prikazPosadjenogURedu.setModel(DBSelect.getPosadenoByName(""));		 
 	}
-	
-	public static String getNasadNazivFromTable()
-	{
-		return nasadInfoTable.getValueAt(0, 2).toString();
-	}
-	
+		
 	private JPanel createSadniceINavodnjavanje() {
 		JPanel sadniceINavodnjavanje = new JPanel();
 		sadniceINavodnjavanje.setLayout(new FormLayout(
@@ -533,7 +533,7 @@ public class GuiVisual {
 
 		JScrollPane scrPaneSadnica = new JScrollPane();
 		pSadnica.add(scrPaneSadnica, BorderLayout.CENTER);
-
+		
 		tablePosadeno = new JTable(DBSelect.getPosadeno());
 		tablePosadeno.setAutoCreateRowSorter(true);
 		tablePosadeno.setColumnSelectionAllowed(true);
@@ -542,6 +542,7 @@ public class GuiVisual {
 			@Override
 			public void valueChanged(ListSelectionEvent e)
 				{
+				
 					if(!tableSorta.getSelectionModel().isSelectionEmpty()) tableSorta.getSelectionModel().clearSelection();
 					if(!tableNavodnjavanje.getSelectionModel().isSelectionEmpty()) tableNavodnjavanje.getSelectionModel().clearSelection();
 					if(!tablePodloga.getSelectionModel().isSelectionEmpty()) tablePodloga.getSelectionModel().clearSelection();
@@ -561,7 +562,7 @@ public class GuiVisual {
 
 		JScrollPane scrPaneSorta = new JScrollPane();
 		pSorta.add(scrPaneSorta, BorderLayout.CENTER);
-
+		
 		tableSorta = new JTable(DBSelect.getSorte());
 		tableSorta.setAutoCreateRowSorter(true);
 		tableSorta.setColumnSelectionAllowed(true);
@@ -588,7 +589,7 @@ public class GuiVisual {
 
 		JScrollPane scrPaneNavodnjavanje = new JScrollPane();
 		pNavodnjavanje.add(scrPaneNavodnjavanje, BorderLayout.CENTER);
-
+		
 		tableNavodnjavanje = new JTable(DBSelect.getNavodnjavanje());
 		tableNavodnjavanje.setAutoCreateRowSorter(true);
 		tableNavodnjavanje.setColumnSelectionAllowed(true);
@@ -662,24 +663,29 @@ public class GuiVisual {
 							case ("Sadnice"):
 							{
 								EntryDialog ins = new EntryDialog(frame, user, 6);
-								ins.setVisible(true);			
+								ins.setVisible(true);	
+								reloadSadniceINavodnjavanje();
 							}break;
 							case ("Sorte"):
 							{
 								EntryDialog ins = new EntryDialog(frame, user, 10);
 								ins.setVisible(true);
+								reloadSadniceINavodnjavanje();
 							}break;
 							case ("Podloge"):
 							{
 								EntryDialog ins = new EntryDialog(frame, user, 8);
 								ins.setVisible(true);
+								reloadSadniceINavodnjavanje();
 							}break;
 							case ("Navodnjavanje"):
 							{
 								EntryDialog ins = new EntryDialog(frame, user, 12);
 								ins.setVisible(true);
+								reloadSadniceINavodnjavanje();
 							}break;	
 						}
+						
 					}
 				});
 		
@@ -743,24 +749,29 @@ public class GuiVisual {
 					case ("Sadnice"):
 					{
 						EntryDialog ins = new EntryDialog(frame, user, 7);
-						ins.setVisible(true);			
+						ins.setVisible(true);
+						reloadSadniceINavodnjavanje();
 					}break;
 					case ("Sorte"):
 					{
 						EntryDialog ins = new EntryDialog(frame, user, 11);
-						ins.setVisible(true);	
+						ins.setVisible(true);
+						reloadSadniceINavodnjavanje();
 					}break;
 					case ("Podloge"):
 					{
 						EntryDialog ins = new EntryDialog(frame, user, 9);
 						ins.setVisible(true);	
+						reloadSadniceINavodnjavanje();
 					}break;
 					case ("Navodnjavanje"):
 					{
 						EntryDialog ins = new EntryDialog(frame, user, 13);
-						ins.setVisible(true);	
-					}break;	
+						ins.setVisible(true);
+						reloadSadniceINavodnjavanje();
+					}break;
 				}
+				
 			}
 		});
 		pUniversalEdit.add(btnUniEditUpdate, "6, 4, fill, center");
@@ -771,9 +782,38 @@ public class GuiVisual {
 		return sadniceINavodnjavanje;
 	}
 	
+	public static void reloadSadniceINavodnjavanje()
+	{
+		 tablePosadeno.setModel(DBSelect.getPosadeno());
+		 tablePodloga.setModel(DBSelect.getSorte());
+		 tableNavodnjavanje.setModel(DBSelect.getNavodnjavanje());
+		 tableSorta.setModel(DBSelect.getPodloge());		 
+	}
 	
+	public static Vector<String> basicInfoPosadjenoSelected()
+	{
+		try
+		{
+			Vector<String> tempVec = new Vector<String>();
+			int row = prikazRedovaTable.getSelectedRow();
+			tempVec.add(choiceNasadPrikaz.getSelectedItem().toString());
+			tempVec.add(prikazRedovaTable.getValueAt(row, 0).toString());
+			tempVec.add(prikazRedovaTable.getValueAt(row, 1).toString());
+			tempVec.add(prikazRedovaTable.getValueAt(row, 2).toString());
+			tempVec.add(prikazRedovaTable.getValueAt(row, 3).toString());
+			return tempVec;
+		}
+		catch(Exception exc)
+		{
+			logger.warn("Neuspjesno povlaèenje podataka sa glavnog prozora: " + exc);
+			return null;
+		}
+	}
 	
-	
+	public static String getNasadNazivFromTable()
+	{
+		return nasadInfoTable.getValueAt(0, 2).toString();
+	}
 	
 	public static int getSelectedVockaID()
 	{

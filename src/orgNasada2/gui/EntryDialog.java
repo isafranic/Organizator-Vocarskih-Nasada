@@ -241,8 +241,8 @@ public class EntryDialog extends JDialog {
 							tF4.getText(), navId, 1, tF5.getText()) > 0)
 						{
 						Utilities.popuniNasadDefault(DBSelect.getNasadKorisnikaPod(user.getId(), tF1.getText()), window);
+						GuiVisual.reloadNasadInfo();
 						dispose();
-						setVisible(false);
 						}
 				}
 			});
@@ -379,7 +379,10 @@ public class EntryDialog extends JDialog {
 					int navId = DBSelect.getNavodnjavanjeID(cBoxChoice2.getSelectedItem().toString());
 					if(DBUpdate.updateNasad(nasad.getIdNasad(),tF1.getText(), user.getId(), 
 							cBoxChoice1.getSelectedItem().toString(), Integer.valueOf(tF3.getText()).intValue(),
-							tF2.getText(), navId, 1, Integer.valueOf(tF4.getText()).intValue())) setVisible(false);
+							tF2.getText(), navId, 1, Integer.valueOf(tF4.getText()).intValue())) {
+						GuiVisual.reloadNasadInfo();
+						dispose();
+					}
 				}
 			});
 		btnNewButton.setActionCommand("OK");
@@ -460,6 +463,8 @@ public class EntryDialog extends JDialog {
 				DBUpdate.updateRed(nasad.getIdNasad(),
 						Integer.valueOf(cBoxChoice1.getSelectedItem().toString()),
 						Integer.valueOf(tF1.getText()));
+						GuiVisual.reloadNasadInfo();
+						dispose();
 			}
 		});
 		// button end		
@@ -517,6 +522,8 @@ public class EntryDialog extends JDialog {
 						DBSelect.getBrojRedovaUNasadu(idNasad),
 						Integer.valueOf(tF1.getText()));				
 						DBUpdate.updateNasadIncBrojRedova(idNasad, user.getId());
+						GuiVisual.reloadNasadInfo();
+						dispose();
 			}
 		});
 		buttonPane.add(btnNewButton);
@@ -568,7 +575,7 @@ public class EntryDialog extends JDialog {
 		if(!chosenParentWindow.isEmpty()) cBoxChoice1.setSelectedItem(chosenParentWindow.elementAt(0));		
 		cBoxChoice1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				redoviNasada.clear();
+				//redoviNasada.clear();
 				for(RedInfo rI : DBSelect.getRedoviInfo(DBSelect.getIdNasada(user,
 						cBoxChoice1.getSelectedItem().toString()))) redoviNasada.add(rI);
 			}
@@ -588,7 +595,7 @@ public class EntryDialog extends JDialog {
 		
 		cBoxChoice2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cBoxChoice3.removeAll();
+				//cBoxChoice3.removeAll();
 				for(RedInfo rI : redoviNasada)
 				{
 					if(cBoxChoice2.getSelectedItem().toString().contentEquals(String.valueOf(rI.getBrojReda())))
@@ -648,6 +655,7 @@ public class EntryDialog extends JDialog {
 							else DBUpdate.updateSadrzajReda(
 								rI.getIdReda(), Integer.valueOf(cBoxChoice3.getSelectedItem().toString()),
 								DBSelect.getPosadenoID(cBoxChoice4.getSelectedItem().toString()), LocalDate.now());
+							GuiVisual.reloadNasadInfo();
 							dispose();
 							}						
 					}				
@@ -717,6 +725,8 @@ public class EntryDialog extends JDialog {
 				DBInsert.unesiPosadeno(DBSelect.getSorteID(cBoxChoice1.getSelectedItem().toString()),
 						DBSelect.getPodlogeID(cBoxChoice2.getSelectedItem().toString()),
 						tF1.getText());
+				GuiVisual.reloadSadniceINavodnjavanje();
+				dispose();
 			}
 		});
 		buttonPane.add(btnNewButton);
@@ -792,6 +802,8 @@ public class EntryDialog extends JDialog {
 						DBSelect.getSorteID(cBoxChoice1.getSelectedItem().toString()),
 								DBSelect.getPodlogeID(cBoxChoice2.getSelectedItem().toString())
 								);
+				GuiVisual.reloadSadniceINavodnjavanje();
+				dispose();
 			}
 		});
 		buttonPane.add(btnNewButton);
@@ -843,6 +855,7 @@ public class EntryDialog extends JDialog {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DBInsert.unesiPodloge(tF1.getText(), tF2.getText());
+				GuiVisual.reloadSadniceINavodnjavanje();
 				dispose();
 			}
 		});
@@ -900,7 +913,7 @@ public class EntryDialog extends JDialog {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DBUpdate.updatePodloga(podloga.getIdPodloge(), tF1.getText(), tF2.getText());
-				
+				GuiVisual.reloadSadniceINavodnjavanje();
 				dispose();
 			}
 		});
@@ -953,6 +966,7 @@ public class EntryDialog extends JDialog {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DBInsert.unesiSorte(tF1.getText(), tF2.getText());
+				GuiVisual.reloadSadniceINavodnjavanje();
 				dispose();
 			}
 		});
@@ -1008,6 +1022,7 @@ public class EntryDialog extends JDialog {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DBUpdate.updateSorta(sorta.getIdSorta(), tF1.getText(), tF2.getText());
+				GuiVisual.reloadSadniceINavodnjavanje();
 				dispose();
 			}
 		});
@@ -1047,6 +1062,7 @@ public class EntryDialog extends JDialog {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DBInsert.unesiNavodnjavanje(tF1.getText());
+				GuiVisual.reloadSadniceINavodnjavanje();
 				dispose();
 			}
 		});
@@ -1089,6 +1105,7 @@ public class EntryDialog extends JDialog {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DBUpdate.updateNavodnjavanje(nav.getIdNavodnjavanje(), tF1.getText());
+				GuiVisual.reloadSadniceINavodnjavanje();
 				dispose();
 			}
 		});
@@ -1190,6 +1207,7 @@ public class EntryDialog extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				DBInsert.unesiSredstvo(tF1.getText(), tF2.getText(), tF3.getText(),
 						tF4.getText(), tF5.getText(), tF6.getText());
+				GuiVisual.reloadTbTretiranje();
 				dispose();
 			}
 		});
@@ -1302,6 +1320,7 @@ public class EntryDialog extends JDialog {
 						tF2.getText(), tF3.getText(),
 						tF4.getText(), tF5.getText(),
 						tF6.getText());
+				GuiVisual.reloadTbTretiranje();
 				dispose();
 			}
 		});
